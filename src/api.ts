@@ -6,7 +6,7 @@ if (!localStorage.getItem("authToken")) {
   localStorage.setItem("authToken", "");
 }
 const authToken = localStorage.getItem("authToken");
-const githubToken = env.GITHUB_TOKEN;
+// const githubToken = env.GITHUB_TOKEN;
 
 export const registerUser = async (
   username: string,
@@ -478,34 +478,34 @@ export const uploadPackageByContent = async (content: string, JSProgram: string,
   }
 };
 
-export const getPackageByURL = async (owner: string, repo: string) => {
-  const GitHubAPI = `https://api.github.com/repos/${owner}/${repo}`;
-  try {
-    const response = await axios.get(GitHubAPI, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: githubToken
-      }
-    });
+// export const getPackageByURL = async (owner: string, repo: string) => {
+//   const GitHubAPI = `https://api.github.com/repos/${owner}/${repo}`;
+//   try {
+//     const response = await axios.get(GitHubAPI, {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: githubToken
+//       }
+//     });
 
-    if (response.status === 200) {
-      console.log("Package retrieved successfully.");
-      return response.data;
-    } else if (response.status === 400) {
-      throw new Error("There is missing field(s) in the URL or it is formed improperly, or is invalid.");
-    } else if (response.status === 401) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else if (response.status === 403) {
-      throw new Error("You do not have permission to access this package.");
-    } else if (response.status === 404) {
-      throw new Error("Package does not exist.");
-    } else {
-      throw new Error(`An unknown error occurred. ${response.status}`);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
+//     if (response.status === 200) {
+//       console.log("Package retrieved successfully.");
+//       return response.data;
+//     } else if (response.status === 400) {
+//       throw new Error("There is missing field(s) in the URL or it is formed improperly, or is invalid.");
+//     } else if (response.status === 401) {
+//       throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
+//     } else if (response.status === 403) {
+//       throw new Error("You do not have permission to access this package.");
+//     } else if (response.status === 404) {
+//       throw new Error("Package does not exist.");
+//     } else {
+//       throw new Error(`An unknown error occurred. ${response.status}`);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export const deleteGroup = async (groupId: number) => {
   try {
