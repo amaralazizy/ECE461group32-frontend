@@ -1,7 +1,8 @@
 import axios from "axios";
-import { env } from "process";
+// import { env } from "process";
 
-const API_BASE_URL = env.API_BASE_URL;
+// const API_BASE_URL = import.meta.env.API_BASE_URL;
+const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/prod";
 if (!localStorage.getItem("authToken")) {
   localStorage.setItem("authToken", "");
 }
@@ -156,20 +157,19 @@ export const getGroupsAndPermissions = async () => {
 //   }
 // }
 
-
 export const addGroup = async (groupName: string, permissions: string[]) => {
   try {
     const response = await axios.post(
       `${API_BASE_URL}/groups`,
       {
         name: groupName,
-        permissions: permissions,
+        permissions: permissions
       },
       {
         headers: {
           "X-Authorization": authToken,
-          "Content-Type": "application/json",
-        },
+          "Content-Type": "application/json"
+        }
       }
     );
 
@@ -181,13 +181,9 @@ export const addGroup = async (groupName: string, permissions: string[]) => {
         // Server responded with an error
         const status = error.response.status;
         if (status === 400) {
-          throw new Error(
-            "There is missing field(s) in the GroupRequest or it is formed improperly."
-          );
+          throw new Error("There is missing field(s) in the GroupRequest or it is formed improperly.");
         } else if (status === 403) {
-          throw new Error(
-            "Authentication failed due to invalid or missing AuthenticationToken."
-          );
+          throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
         } else if (status === 409) {
           throw new Error("The group already exists.");
         } else {
