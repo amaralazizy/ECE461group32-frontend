@@ -1,12 +1,11 @@
 import axios from "axios";
 import { env } from "process";
 
-const API_BASE_URL = "http://localhost:4000/dev";
+const API_BASE_URL = env.API_BASE_URL;
 if (!localStorage.getItem("authToken")) {
   localStorage.setItem("authToken", "");
 }
 const authToken = localStorage.getItem("authToken");
-// console.log(authToken);
 const githubToken = env.GITHUB_TOKEN;
 
 export const registerUser = async (

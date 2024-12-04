@@ -8,3 +8,20 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>,
 )
+
+// import React from "react";
+// import ReactDOM from "react-dom/client";
+// import App from "./App";
+
+// function ErrorBoundary({ children }: { children: React.ReactNode }) {
+//   return <React.Suspense fallback={<div>Loading...</div>}>{children}</React.Suspense>;
+// }
+
+// const root = ReactDOM.createRoot(document.getElementById("root")!);
+// root.render(
+//   <ErrorBoundary>
+//     <React.StrictMode>
+//       <App />
+//     </React.StrictMode>
+//   </ErrorBoundary>
+// );

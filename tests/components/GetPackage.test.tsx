@@ -35,16 +35,16 @@ describe("GetPackage", () => {
     fireEvent.change(screen.getByLabelText("Package ID"), { target: { value: "1" } });
     fireEvent.click(screen.getByRole("button", { name: /^search$/i}));
 
-    // await waitFor(() => {
-    //   expect(getPackageById).toHaveBeenCalledWith("123");
-    //   expect(screen.getByText("Failed to get package by ID")).toBeInTheDocument();
-    // });
+    await waitFor(() => {
+      expect(getPackageById).toHaveBeenCalledWith("1");
+      expect(screen.getByText("Failed to get package by ID")).toBeInTheDocument();
+    });
 
     unmount(); // Clean up the component after the test
   });
 
   it("calls searchPackagesByRegEx when searching by regex", async () => {
-  const mockData = {"Version": "1.2.3", "Name": "Underscore", "ID": "underscore"};
+  const mockData = [{"Version": "1.2.3", "Name": "Underscore", "ID": "underscore"}];
   searchPackagesByRegEx.mockResolvedValueOnce(mockData);
 
   const { unmount } = render(<GetPackage />);
@@ -55,15 +55,20 @@ describe("GetPackage", () => {
   fireEvent.click(screen.getByRole("button", { name: /search by regex/i }));
 
 //   // Find the input field by label and enter the regex value
-  fireEvent.change(screen.getByLabelText("Package Regex"), { target: { value: "Underscore" } });
+  fireEvent.change(screen.getByLabelText("Package Regex"), { target: { value: /Underscore/i } });
 
 //   // Find the search button using the role and click it
   const searchButton = screen.getByRole("button", { name: /^search$/i });
   fireEvent.click(searchButton);
 
   await waitFor(() => {
-    expect(searchPackagesByRegEx).toHaveBeenCalledWith("Underscore");
-    expect(screen.getByText(JSON.stringify(mockData, null, 2))).toBeInTheDocument();
+    expect(searchPackagesByRegEx).toHaveBeenCalledWith("/Underscore/i");
+    expect(
+      screen.getByText((content, element) => {
+        // Using element.textContent to get the whole text and compare
+        return element?.tagName.toLowerCase() === "pre" && content.includes('"Name": "Underscore"');
+      })
+    ).toBeInTheDocument();
   });
 
   unmount(); // Clean up the component after the test
