@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authenticateUser } from '../api'; // Make sure the path matches your file structure
+// import { authenticateUser } from '../api'; // Make sure the path matches your file structure
+import { authenticateUser2 } from '../api'; // Make sure the path matches your file structure
 import Loading from '../components/ui/loading';
 
 type LoginProps = {
@@ -21,7 +22,8 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     try {
       setLoading(true);
       // Use the authenticateUser API function to log in the user
-      const data = await authenticateUser(username, password, false); // Assuming false for `isAdministrator`
+      // const data = await authenticateUser(username, password, false); // Assuming false for `isAdministrator`
+      const data = await authenticateUser2(username, password, false); // Assuming false for `isAdministrator`
       // console.log(data);
       // console.log(data.token);
       if (data && data.token) {

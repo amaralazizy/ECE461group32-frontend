@@ -51,12 +51,54 @@ export const registerUser = async (
 
 export const authenticateUser = async (username: string, password: string, isAdministrator: boolean) => {
   const passwordField = document.getElementById("password");
-  console.log(passwordField); 
+  console.log(passwordField);
   try {
     console.log(JSON.stringify({ password }));
     console.log("Authenticating user...");
     const response = await axios.put(
       `${API_BASE_URL}/authenticate`,
+      {
+        User: {
+          name: username,
+          isAdmin: isAdministrator
+        },
+        Secret: {
+          password: password
+        }
+      },
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    );
+    console.log("authenticate response:", response);
+    if (response.status === 200 || response.status === 201) {
+      console.log("User authenticated successfully.");
+      // console.log(response.data);
+      return response.data;
+    } else if (response.status === 400) {
+      throw new Error("There is missing field(s) in the AuthenticationRequest or it is formed improperly.");
+    } else if (response.status === 401) {
+      throw new Error("The user or password is invalid.");
+    } else if (response.status === 501) {
+      throw new Error("This system does not support authentication.");
+    } else {
+      throw new Error("An unknown error occurred.");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const authenticateUser2 = async (username: string, password: string, isAdministrator: boolean) => {
+  const passwordField = document.getElementById("password");
+  console.log(passwordField);
+  try {
+    console.log(JSON.stringify({ password }));
+    console.log("Authenticating user...");
+    const response = await axios.put(
+      `${API_BASE_URL}/authenticate2`,
       {
         User: {
           name: username,
