@@ -63,7 +63,7 @@ export const authenticateUser = async (username: string, password: string, isAdm
           isAdmin: isAdministrator
         },
         Secret: {
-          password: encodeURIComponent(password)
+          password: password
         }
       },
       {
