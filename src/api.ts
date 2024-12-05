@@ -92,10 +92,10 @@ export const authenticateUser = async (username: string, password: string, isAdm
 };
 
 export const authenticateUser2 = async (username: string, password: string, isAdministrator: boolean) => {
-  const passwordField = document.getElementById("password");
-  console.log(passwordField);
+  // const passwordField = document.getElementById("password");
+  // console.log(passwordField);
   try {
-    console.log(JSON.stringify({ password }));
+    // console.log(JSON.stringify({ password }));
     console.log("Authenticating user...");
     const response = await axios.put(
       `${API_BASE_URL}/authenticate2`,

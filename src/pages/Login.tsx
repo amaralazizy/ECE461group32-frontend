@@ -27,7 +27,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       // console.log(data);
       // console.log(data.token);
       if (data) {
-        console.log(data);
+        // console.log(data);
         localStorage.setItem("authToken", data); // Save the token for authenticated requests
         onLoginSuccess(); // Update parent state to reflect login status
         navigate("/"); // Redirect to the home page
