@@ -48,7 +48,10 @@ export default function Upload(): JSX.Element {
 
   return (
     <div className="min-w-[700px] flex gap-10 items-center">
-      <FileUploadModal onFileUpload={handleFileUpload} />
+      <div>
+        <h2 className="text-3xl text-white mb-4">Upload by File</h2>
+        <FileUploadModal onFileUpload={handleFileUpload} />
+      </div>
       <div className="bg-white h-96 w-[1px]"></div>
       <div className="flex flex-col items-center gap-10">
         <label className="text-3xl text-white" htmlFor="url">
@@ -63,7 +66,10 @@ export default function Upload(): JSX.Element {
           placeholder="Enter a valid URL"
           className="text-3xl rounded caret-black p-2"
         />
-        <button onClick={handleUrlSubmit} className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg">
+        <button
+          data-testid="upload-by-url"
+          onClick={handleUrlSubmit}
+          className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg">
           Upload
         </button>
         {errorMessage && <span className="text-red-500 mt-2">{errorMessage}</span>}

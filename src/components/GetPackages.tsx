@@ -51,6 +51,7 @@ export default function GetPackages(): JSX.Element {
             />
             <label className="text-3xl text-white" htmlFor="numOfPages">Number of Pages</label>
             <input
+                id="numOfPages"
                 type="number"
                 onChange={(e) => setnumOfPages(e.target.valueAsNumber)}
                 placeholder="Enter number of pages"

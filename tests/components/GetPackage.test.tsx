@@ -7,8 +7,8 @@ import { getPackageById, searchPackagesByRegEx } from "../../src/api"; // Adjust
 
 vi.mock("../../src/api", () => ({
   getPackageById: vi.fn(),
-  searchPackagesByRegEx: vi.fn(),
-})); 
+  searchPackagesByRegEx: vi.fn()
+}));
 
 describe("GetPackage", () => {
   afterEach(() => {
@@ -31,9 +31,9 @@ describe("GetPackage", () => {
 
     const { unmount } = render(<GetPackage />);
 
-    fireEvent.click(screen.getByRole("button", { name: /search by id/i}));
+    fireEvent.click(screen.getByRole("button", { name: /search by id/i }));
     fireEvent.change(screen.getByLabelText("Package ID"), { target: { value: "1" } });
-    fireEvent.click(screen.getByRole("button", { name: /^search$/i}));
+    fireEvent.click(screen.getByRole("button", { name: /^search$/i }));
 
     await waitFor(() => {
       expect(getPackageById).toHaveBeenCalledWith("1");
@@ -44,42 +44,41 @@ describe("GetPackage", () => {
   });
 
   it("calls searchPackagesByRegEx when searching by regex", async () => {
-  const mockData = [{"Version": "1.2.3", "Name": "Underscore", "ID": "underscore"}];
-  searchPackagesByRegEx.mockResolvedValueOnce(mockData);
+    const mockData = [{ Version: "1.2.3", Name: "Underscore", ID: "underscore" }];
+    searchPackagesByRegEx.mockResolvedValueOnce(mockData);
 
-  const { unmount } = render(<GetPackage />);
+    const { unmount } = render(<GetPackage />);
 
-//   expect(screen.getByRole("button", { name: /search by regex/i })).toBeInTheDocument();
+    //   expect(screen.getByRole("button", { name: /search by regex/i })).toBeInTheDocument();
 
-  // Click the "Search by Regex" button to initiate the search form
-  fireEvent.click(screen.getByRole("button", { name: /search by regex/i }));
+    // Click the "Search by Regex" button to initiate the search form
+    fireEvent.click(screen.getByRole("button", { name: /search by regex/i }));
 
-//   // Find the input field by label and enter the regex value
-  fireEvent.change(screen.getByLabelText("Package Regex"), { target: { value: /Underscore/i } });
+    //   // Find the input field by label and enter the regex value
+    fireEvent.change(screen.getByLabelText("Package Regex"), { target: { value: /Underscore/i } });
 
-//   // Find the search button using the role and click it
-  const searchButton = screen.getByRole("button", { name: /^search$/i });
-  fireEvent.click(searchButton);
+    //   // Find the search button using the role and click it
+    const searchButton = screen.getByRole("button", { name: /^search$/i });
+    fireEvent.click(searchButton);
 
-  await waitFor(() => {
-    expect(searchPackagesByRegEx).toHaveBeenCalledWith("/Underscore/i");
-    expect(
-      screen.getByText((content, element) => {
-        // Using element.textContent to get the whole text and compare
-        return element?.tagName.toLowerCase() === "pre" && content.includes('"Name": "Underscore"');
-      })
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(searchPackagesByRegEx).toHaveBeenCalledWith("/Underscore/i");
+      expect(
+        screen.getByText((content, element) => {
+          // Using element.textContent to get the whole text and compare
+          return element?.tagName.toLowerCase() === "pre" && content.includes('"Name": "Underscore"');
+        })
+      ).toBeInTheDocument();
+    });
+
+    unmount(); // Clean up the component after the test
   });
-
-  unmount(); // Clean up the component after the test
-});
-
 
   it("displays error message if package ID is empty", async () => {
     const { unmount } = render(<GetPackage />);
 
     fireEvent.click(screen.getByText("Search by ID"));
-    fireEvent.click(screen.getByText("Get Package by ID"));
+    fireEvent.click(screen.getByText("Search"));
 
     await waitFor(() => {
       expect(screen.getByText("Package ID cannot be empty")).toBeInTheDocument();
@@ -92,7 +91,7 @@ describe("GetPackage", () => {
     const { unmount } = render(<GetPackage />);
 
     fireEvent.click(screen.getByText("Search by Regex"));
-    fireEvent.click(screen.getByText("Search by Regex"));
+    fireEvent.click(screen.getByText("Search"));
 
     await waitFor(() => {
       expect(screen.getByText("Regex cannot be empty")).toBeInTheDocument();
@@ -108,7 +107,7 @@ describe("GetPackage", () => {
 
     fireEvent.click(screen.getByText("Search by ID"));
     fireEvent.change(screen.getByLabelText("Package ID"), { target: { value: "123" } });
-    fireEvent.click(screen.getByText("Get Package by ID"));
+    fireEvent.click(screen.getByText("Search"));
 
     await waitFor(() => {
       expect(screen.getByText("Failed to get package by ID")).toBeInTheDocument();
@@ -118,13 +117,13 @@ describe("GetPackage", () => {
   });
 
   it("displays error message when searchPackagesByRegEx fails", async () => {
-    searchPackagesByRegEx.mockRejectedValueOnce(new Error("Failed to search"));
+    searchPackagesByRegEx.mockRejectedValueOnce(new Error("Failed to search packages by regex"));
 
     const { unmount } = render(<GetPackage />);
 
     fireEvent.click(screen.getByText("Search by Regex"));
-    fireEvent.change(screen.getByLabelText("Search by Regex"), { target: { value: "testRegex" } });
-    fireEvent.click(screen.getByText("Search by Regex"));
+    fireEvent.change(screen.getByLabelText("Package Regex"), { target: { value: "testRegex" } });
+    fireEvent.click(screen.getByText("Search"));
 
     await waitFor(() => {
       expect(screen.getByText("Failed to search packages by regex")).toBeInTheDocument();

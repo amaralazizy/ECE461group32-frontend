@@ -69,8 +69,10 @@ export const authenticateUser = async (username: string, password: string, isAdm
         }
       }
     );
+    console.log(response);
     if (response.status === 200 || response.status === 201) {
       console.log("User authenticated successfully.");
+      // console.log(response.data);
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the AuthenticationRequest or it is formed improperly.");
