@@ -23,6 +23,7 @@ export default function Cost(): JSX.Element {
       const response = await getPackageCost(packageId);
       if (response) {
         setCost(response.totalCost);
+        console.log(response.totalCost);
         setResponseMessage("Package cost retrieved successfully.");
       } else {
         setResponseMessage("Failed to get the package cost. Please try again.");
