@@ -2,7 +2,7 @@ import axios from "axios";
 // import { env } from "process";
 
 // const API_BASE_URL = import.meta.env.API_BASE_URL;
-const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/prod/";
+const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/prod";
 if (!localStorage.getItem("authToken")) {
   localStorage.setItem("authToken", "");
 }
@@ -50,7 +50,10 @@ export const registerUser = async (
 };
 
 export const authenticateUser = async (username: string, password: string, isAdministrator: boolean) => {
+  const passwordField = document.getElementById("password");
+  console.log(passwordField); 
   try {
+    console.log(JSON.stringify({ password }));
     console.log("Authenticating user...");
     const response = await axios.put(
       `${API_BASE_URL}/authenticate`,
@@ -60,7 +63,7 @@ export const authenticateUser = async (username: string, password: string, isAdm
           isAdmin: isAdministrator
         },
         Secret: {
-          password
+          password: encodeURIComponent(password)
         }
       },
       {
@@ -69,7 +72,7 @@ export const authenticateUser = async (username: string, password: string, isAdm
         }
       }
     );
-    console.log(response);
+    console.log("authenticate response:", response);
     if (response.status === 200 || response.status === 201) {
       console.log("User authenticated successfully.");
       // console.log(response.data);

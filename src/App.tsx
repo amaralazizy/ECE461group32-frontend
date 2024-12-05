@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-d
 import "./App.css";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-// import Signup from "./pages/Signup";
 import Loading from "./components/ui/loading";
 
 function App(): JSX.Element {
@@ -37,7 +36,7 @@ function App(): JSX.Element {
           <Route path="/" element={<Home isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />} />
           <Route
             path="/login"
-            element={!isLoggedIn ? <Login onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/" />}
+            element={!isLoggedIn ? <Login onLoginSuccess={handleLoginSuccess} /> :<Navigate to="/" />}
           />
           {/* <Route path="/signup" element={!isLoggedIn ? <Signup /> : <Navigate to="/" />} /> */}
         </Routes>
