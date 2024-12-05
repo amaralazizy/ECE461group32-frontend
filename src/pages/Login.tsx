@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // import { authenticateUser } from '../api'; // Make sure the path matches your file structure
-import { authenticateUser2 } from '../api'; // Make sure the path matches your file structure
-import Loading from '../components/ui/loading';
+import { authenticateUser2 } from "../api"; // Make sure the path matches your file structure
+import Loading from "../components/ui/loading";
 
 type LoginProps = {
   onLoginSuccess: () => void;
 };
 
 const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     try {
       setLoading(true);
@@ -26,20 +26,20 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       const data = await authenticateUser2(username, password, false); // Assuming false for `isAdministrator`
       // console.log(data);
       // console.log(data.token);
-      if (data && data.token) {
+      if (data) {
         console.log(data);
-        localStorage.setItem('authToken', data); // Save the token for authenticated requests
+        localStorage.setItem("authToken", data); // Save the token for authenticated requests
         onLoginSuccess(); // Update parent state to reflect login status
-        navigate('/'); // Redirect to the home page
+        navigate("/"); // Redirect to the home page
       } else {
-        setError('Login failed. Please check your credentials and try again.');
+        setError("Login failed. Please check your credentials and try again.");
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message); // Safely access the error message if it’s an instance of Error
-    } else {
-        setError('An unexpected error occurred'); // Fallback message if err is not of type Error
-    }
+      } else {
+        setError("An unexpected error occurred"); // Fallback message if err is not of type Error
+      }
     } finally {
       setLoading(false);
     }
@@ -53,14 +53,15 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
     <div className="text-3xl min-h-screen bg-gray-900 py-7 px-60 flex flex-col items-center">
       <h2 className="font-bold text-white mb-6">Login</h2>
       <button
-        onClick={() => navigate('/')}
-        className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded mb-4"
-      >
+        onClick={() => navigate("/")}
+        className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded mb-4">
         Back
       </button>
       <form onSubmit={handleLogin} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="username">Username</label>
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="username">
+            Username
+          </label>
           <input
             id="username"
             type="text"
@@ -71,7 +72,9 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
           />
         </div>
         <div className="mb-6">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="password">Password</label>
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="password">
+            Password
+          </label>
           <input
             id="password"
             type="password"
@@ -85,8 +88,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Login
           </button>
         </div>

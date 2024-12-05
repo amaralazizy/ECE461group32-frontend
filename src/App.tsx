@@ -36,7 +36,7 @@ function App(): JSX.Element {
           <Route path="/" element={<Home isLoggedIn={isLoggedIn} onLogout={() => setIsLoggedIn(false)} />} />
           <Route
             path="/login"
-            element={!isLoggedIn ? <Login onLoginSuccess={handleLoginSuccess} /> :<Navigate to="/" />}
+            element={!isLoggedIn ? <Login onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/" />}
           />
           {/* <Route path="/signup" element={!isLoggedIn ? <Signup /> : <Navigate to="/" />} /> */}
         </Routes>
