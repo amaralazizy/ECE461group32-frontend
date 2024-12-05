@@ -2,7 +2,7 @@ import axios from "axios";
 // import { env } from "process";
 
 // const API_BASE_URL = import.meta.env.API_BASE_URL;
-const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/prod";
+const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/prod/";
 if (!localStorage.getItem("authToken")) {
   localStorage.setItem("authToken", "");
 }
