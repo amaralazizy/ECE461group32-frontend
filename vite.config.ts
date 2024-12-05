@@ -5,7 +5,7 @@ import path from "path";
 
 export default defineConfig({
   plugins: [
-    react(),
+    react()
     // istanbul({
     //   include: ["src/*/.{ts,tsx}"], // Include all TypeScript and TSX files in src
     //   exclude: ["node_modules", "tests", "coverage"], // Exclude specific folders
