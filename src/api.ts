@@ -170,7 +170,7 @@ export const addGroup = async (groupName: string, permissions: string[]) => {
   }
 };
 
-export const getPackages = async (queryParams: object, offset: number = 1) => {
+export const getPackages = async (queryParams: object[], offset: number = 1) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/packages`, queryParams, {
       params: { offset },
