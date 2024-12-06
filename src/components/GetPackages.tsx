@@ -10,7 +10,7 @@ export default function GetPackages(): JSX.Element {
     try {
       const data = await getPackages(JSON.parse(query), numOfPages);
       if (data) {
-        setResponseMessage(data);
+        setResponseMessage(JSON.stringify(data));
       } else {
         setResponseMessage("No packages found");
       }
