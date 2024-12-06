@@ -3,7 +3,7 @@ import { getPackageRate } from "../api";
 
 export default function Rate(): JSX.Element {
     const [packageId, setPackageId] = useState("");
-    const [rate, setRate] = useState<number | null>(null);
+    const [rate, setRate] = useState<string | null>(null);
     const [responseMessage, setResponseMessage] = useState< [string, "success" | "error"]| null>("");
 
     const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +22,7 @@ export default function Rate(): JSX.Element {
             // Replace with the actual API endpoint to get the package rate
             const response = await getPackageRate(packageId);
             if (response) {
-                setRate(response.rate);
+                setRate(JSON.stringify(response, null, 2));
                 setResponseMessage(["Package rate retrieved successfully.", "success"]);
             } else {
                 setResponseMessage(["Failed to get the package rate. Please try again.", "error"]);
