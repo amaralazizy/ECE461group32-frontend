@@ -4,32 +4,33 @@ import { getPackageCost } from "../api";
 export default function Cost(): JSX.Element {
   const [packageId, setPackageId] = useState("");
   const [cost, setCost] = useState<number | null>(null);
-  const [responseMessage, setResponseMessage] = useState("");
+  const [responseMessage, setResponseMessage] = useState<[string, string] | null>(null);
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPackageId(e.target.value);
-    setResponseMessage(""); // Clear response message when user starts typing
+    setResponseMessage(["", "wait"]); // Clear response message when user starts typing
     setCost(null); // Clear cost when user starts typing
   };
 
   const handleGetCost = async () => {
     if (!packageId) {
-      setResponseMessage("Please enter a package ID.");
+      setResponseMessage(["Please enter a package ID.", "error"]);
       return;
     }
 
     try {
       // Replace with the actual API endpoint to get the package cost
       const response = await getPackageCost(packageId);
+    //   console.log(response);
       if (response) {
-        setCost(response.packageId.totalCost);
-        console.log(response.packageId.totalCost);
-        setResponseMessage("Package cost retrieved successfully.");
+        setCost(response);
+        // console.log(response);
+        setResponseMessage(["Package cost retrieved successfully.", "success"]);
       } else {
-        setResponseMessage("Failed to get the package cost. Please try again.");
+        setResponseMessage(["Failed to get the package cost. Please try again.", "error"]);
       }
     } catch {
-      setResponseMessage("An error occurred. Please try again later.");
+      setResponseMessage(["An error occurred. Please try again later.", "error"]);
     }
   };
 
@@ -56,7 +57,11 @@ export default function Cost(): JSX.Element {
       <button onClick={handleGetCost} className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg">
         Get Package Cost
       </button>
-      {responseMessage && <span className="text-red-500 mt-2">{responseMessage}</span>}
+      {responseMessage && (
+        <span className={`${responseMessage[1] == "error" ? "text-red-500" : "text-green-500"} mt-2`}>
+          {responseMessage[0]}
+        </span>
+      )}
       {cost !== null && <div className="mt-4 text-3xl text-white">Package Cost: ${cost}</div>}
     </div>
   );

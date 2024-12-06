@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/97</span>
+                <span class='fraction'>0/100</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/97</span>
+                <span class='fraction'>0/100</span>
             </div>
         
             
@@ -160,7 +160,10 @@
 <a name='L95'></a><a href='#L95'>95</a>
 <a name='L96'></a><a href='#L96'>96</a>
 <a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -257,47 +260,51 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import React, { useState } from 'react';</span></span></span>
-<span class="cstat-no" title="statement not covered" >import { useNavigate } from 'react-router-dom';</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import React, { useState } from "react";</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { useNavigate } from "react-router-dom";</span>
 <span class="cstat-no" title="statement not covered" >// import { authenticateUser } from '../api'; // Make sure the path matches your file structure</span>
-<span class="cstat-no" title="statement not covered" >import { authenticateUser2 } from '../api'; // Make sure the path matches your file structure</span>
-<span class="cstat-no" title="statement not covered" >import Loading from '../components/ui/loading';</span>
+<span class="cstat-no" title="statement not covered" >import { authenticateUser } from "../api"; // Make sure the path matches your file structure</span>
+<span class="cstat-no" title="statement not covered" >import Loading from "../components/ui/loading";</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >type LoginProps = {</span>
 <span class="cstat-no" title="statement not covered" >  onLoginSuccess: () =&gt; void;</span>
 <span class="cstat-no" title="statement not covered" >};</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >const Login: React.FC&lt;LoginProps&gt; = ({ onLoginSuccess }) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  const [username, setUsername] = useState('');</span>
-<span class="cstat-no" title="statement not covered" >  const [password, setPassword] = useState('');</span>
-<span class="cstat-no" title="statement not covered" >  const [error, setError] = useState('');</span>
+<span class="cstat-no" title="statement not covered" >  const [username, setUsername] = useState("");</span>
+<span class="cstat-no" title="statement not covered" >  const [password, setPassword] = useState("");</span>
+<span class="cstat-no" title="statement not covered" >  const [error, setError] = useState("");</span>
 <span class="cstat-no" title="statement not covered" >  const navigate = useNavigate();</span>
 <span class="cstat-no" title="statement not covered" >  const [loading, setLoading] = useState(false);</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >  const handleLogin = async (e: React.FormEvent) =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    e.preventDefault();</span>
-<span class="cstat-no" title="statement not covered" >    setError('');</span>
+<span class="cstat-no" title="statement not covered" >    setError("");</span>
 <span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
 <span class="cstat-no" title="statement not covered" >      setLoading(true);</span>
 <span class="cstat-no" title="statement not covered" >      // Use the authenticateUser API function to log in the user</span>
 <span class="cstat-no" title="statement not covered" >      // const data = await authenticateUser(username, password, false); // Assuming false for `isAdministrator`</span>
-<span class="cstat-no" title="statement not covered" >      const data = await authenticateUser2(username, password, false); // Assuming false for `isAdministrator`</span>
+<span class="cstat-no" title="statement not covered" >      const data = await authenticateUser(username, password, false); // Assuming false for `isAdministrator`</span>
 <span class="cstat-no" title="statement not covered" >      // console.log(data);</span>
 <span class="cstat-no" title="statement not covered" >      // console.log(data.token);</span>
-<span class="cstat-no" title="statement not covered" >      if (data &amp;&amp; data.token) {</span>
-<span class="cstat-no" title="statement not covered" >        localStorage.setItem('authToken', data.token); // Save the token for authenticated requests</span>
+<span class="cstat-no" title="statement not covered" >      if (data) {</span>
+<span class="cstat-no" title="statement not covered" >        // console.log(data);</span>
+<span class="cstat-no" title="statement not covered" >        localStorage.setItem("authToken", data); // Save the token for authenticated requests</span>
 <span class="cstat-no" title="statement not covered" >        onLoginSuccess(); // Update parent state to reflect login status</span>
-<span class="cstat-no" title="statement not covered" >        navigate('/'); // Redirect to the home page</span>
+<span class="cstat-no" title="statement not covered" >        navigate("/"); // Redirect to the home page</span>
 <span class="cstat-no" title="statement not covered" >      } else {</span>
-<span class="cstat-no" title="statement not covered" >        setError('Login failed. Please check your credentials and try again.');</span>
+<span class="cstat-no" title="statement not covered" >        setError("Login failed. Please check your credentials and try again.");</span>
 <span class="cstat-no" title="statement not covered" >      }</span>
 <span class="cstat-no" title="statement not covered" >    } catch (err: unknown) {</span>
 <span class="cstat-no" title="statement not covered" >      if (err instanceof Error) {</span>
 <span class="cstat-no" title="statement not covered" >        setError(err.message); // Safely access the error message if it’s an instance of Error</span>
-<span class="cstat-no" title="statement not covered" >    } else {</span>
-<span class="cstat-no" title="statement not covered" >        setError('An unexpected error occurred'); // Fallback message if err is not of type Error</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
+<span class="cstat-no" title="statement not covered" >      } else {</span>
+<span class="cstat-no" title="statement not covered" >        setError("An unexpected error occurred"); // Fallback message if err is not of type Error</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
 <span class="cstat-no" title="statement not covered" >    } finally {</span>
 <span class="cstat-no" title="statement not covered" >      setLoading(false);</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
@@ -311,14 +318,15 @@
 <span class="cstat-no" title="statement not covered" >    &lt;div className="text-3xl min-h-screen bg-gray-900 py-7 px-60 flex flex-col items-center"&gt;</span>
 <span class="cstat-no" title="statement not covered" >      &lt;h2 className="font-bold text-white mb-6"&gt;Login&lt;/h2&gt;</span>
 <span class="cstat-no" title="statement not covered" >      &lt;button</span>
-<span class="cstat-no" title="statement not covered" >        onClick={() =&gt; navigate('/')}</span>
-<span class="cstat-no" title="statement not covered" >        className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded mb-4"</span>
-<span class="cstat-no" title="statement not covered" >      &gt;</span>
+<span class="cstat-no" title="statement not covered" >        onClick={() =&gt; navigate("/")}</span>
+<span class="cstat-no" title="statement not covered" >        className="bg-gray-600 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded mb-4"&gt;</span>
 <span class="cstat-no" title="statement not covered" >        Back</span>
 <span class="cstat-no" title="statement not covered" >      &lt;/button&gt;</span>
 <span class="cstat-no" title="statement not covered" >      &lt;form onSubmit={handleLogin} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;div className="mb-4"&gt;</span>
-<span class="cstat-no" title="statement not covered" >          &lt;label className="block text-gray-700 font-bold mb-2" htmlFor="username"&gt;Username&lt;/label&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;label className="block text-gray-700 font-bold mb-2" htmlFor="username"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            Username</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/label&gt;</span>
 <span class="cstat-no" title="statement not covered" >          &lt;input</span>
 <span class="cstat-no" title="statement not covered" >            id="username"</span>
 <span class="cstat-no" title="statement not covered" >            type="text"</span>
@@ -329,7 +337,9 @@
 <span class="cstat-no" title="statement not covered" >          /&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;div className="mb-6"&gt;</span>
-<span class="cstat-no" title="statement not covered" >          &lt;label className="block text-gray-700 font-bold mb-2" htmlFor="password"&gt;Password&lt;/label&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;label className="block text-gray-700 font-bold mb-2" htmlFor="password"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            Password</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/label&gt;</span>
 <span class="cstat-no" title="statement not covered" >          &lt;input</span>
 <span class="cstat-no" title="statement not covered" >            id="password"</span>
 <span class="cstat-no" title="statement not covered" >            type="password"</span>
@@ -343,8 +353,7 @@
 <span class="cstat-no" title="statement not covered" >        &lt;div className="flex items-center justify-between"&gt;</span>
 <span class="cstat-no" title="statement not covered" >          &lt;button</span>
 <span class="cstat-no" title="statement not covered" >            type="submit"</span>
-<span class="cstat-no" title="statement not covered" >            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"</span>
-<span class="cstat-no" title="statement not covered" >          &gt;</span>
+<span class="cstat-no" title="statement not covered" >            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"&gt;</span>
 <span class="cstat-no" title="statement not covered" >            Login</span>
 <span class="cstat-no" title="statement not covered" >          &lt;/button&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
@@ -361,7 +370,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-05T02:54:39.393Z
+                at 2024-12-05T23:08:38.382Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

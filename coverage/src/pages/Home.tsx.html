@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/89</span>
+                <span class='fraction'>0/79</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/89</span>
+                <span class='fraction'>0/79</span>
             </div>
         
             
@@ -142,27 +142,7 @@
 <a name='L77'></a><a href='#L77'>77</a>
 <a name='L78'></a><a href='#L78'>78</a>
 <a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a>
-<a name='L81'></a><a href='#L81'>81</a>
-<a name='L82'></a><a href='#L82'>82</a>
-<a name='L83'></a><a href='#L83'>83</a>
-<a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -249,7 +229,6 @@
 <span class="cstat-no" title="statement not covered" >import Update from "../components/Update";</span>
 <span class="cstat-no" title="statement not covered" >import Rate from "../components/Rate";</span>
 <span class="cstat-no" title="statement not covered" >import Cost from "../components/Cost";</span>
-<span class="cstat-no" title="statement not covered" >import { Button } from "../components/ui/button";</span>
 <span class="cstat-no" title="statement not covered" >import Tracks from "../components/Tracks";</span>
 <span class="cstat-no" title="statement not covered" >import GetPackage from "../components/GetPackage";</span>
 <span class="cstat-no" title="statement not covered" >import AddUser from "../components/AddUser";</span>
@@ -275,56 +254,47 @@
 <span class="cstat-no" title="statement not covered" >  return (</span>
 <span class="cstat-no" title="statement not covered" >    &lt;div className="text-3xl min-h-screen bg-gray-900 py-7 px-60 text-center flex flex-col gap-16"&gt;</span>
 <span class="cstat-no" title="statement not covered" >      &lt;h1 className="text-6xl font-bold text-white mb-9"&gt;ECE 461 Project&lt;/h1&gt;</span>
-<span class="cstat-no" title="statement not covered" >        {isLoggedIn ? (</span>
-<span class="cstat-no" title="statement not covered" >          &lt;div&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;Button</span>
-<span class="cstat-no" title="statement not covered" >              text="Logout"</span>
-<span class="cstat-no" title="statement not covered" >              className="bg-red-500 text-white p-3 rounded mb-6"</span>
-<span class="cstat-no" title="statement not covered" >              onClick={() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >                localStorage.removeItem("authToken");</span>
-<span class="cstat-no" title="statement not covered" >                onLogout();</span>
-<span class="cstat-no" title="statement not covered" >                navigate("/");</span>
-<span class="cstat-no" title="statement not covered" >              }}</span>
-<span class="cstat-no" title="statement not covered" >            /&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;div className="flex flex-wrap items-center justify-center gap-10 rounded"&gt;</span>
-<span class="cstat-no" title="statement not covered" >              {tabs.map((tab) =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >                &lt;div</span>
-<span class="cstat-no" title="statement not covered" >                  role="tab"</span>
-<span class="cstat-no" title="statement not covered" >                  key={tab}</span>
-<span class="cstat-no" title="statement not covered" >                  className={`bg-white h-fit px-2 py-1 rounded cursor-pointer whitespace-nowrap ${tab.toLowerCase() === activeTab ? "bg-opacity-100" : "bg-opacity-50"}`}</span>
-<span class="cstat-no" title="statement not covered" >                  onClick={() =&gt; setActiveTab(tab.toLowerCase())}&gt;</span>
-<span class="cstat-no" title="statement not covered" >                  {tab}</span>
-<span class="cstat-no" title="statement not covered" >                &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >              ))}</span>
-<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;div className="mt-10 mx-auto"&gt;</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "upload a package" &amp;&amp; &lt;Upload /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "get packages by query" &amp;&amp; &lt;GetPackages /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "reset the rigestiry" &amp;&amp; &lt;Reset /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "update a package" &amp;&amp; &lt;Update /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "package rate" &amp;&amp; &lt;Rate /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "package cost" &amp;&amp; &lt;Cost /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "get a package" &amp;&amp; &lt;GetPackage /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "add a user" &amp;&amp; &lt;AddUser /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "add a group" &amp;&amp; &lt;AddGroup /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >              {activeTab === "delete a group" &amp;&amp; &lt;DeleteGroup /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      {isLoggedIn ? (</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;button</span>
+<span class="cstat-no" title="statement not covered" >            className="bg-red-500 text-white p-3 rounded mb-6"</span>
+<span class="cstat-no" title="statement not covered" >            onClick={() =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >              localStorage.removeItem("authToken");</span>
+<span class="cstat-no" title="statement not covered" >              onLogout();</span>
+<span class="cstat-no" title="statement not covered" >              navigate("/");</span>
+<span class="cstat-no" title="statement not covered" >            }}&gt;</span>
+<span class="cstat-no" title="statement not covered" >            Logout</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/button&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div className="flex flex-wrap items-center justify-center gap-10 rounded"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            {tabs.map((tab) =&gt; (</span>
+<span class="cstat-no" title="statement not covered" >              &lt;div</span>
+<span class="cstat-no" title="statement not covered" >                role="tab"</span>
+<span class="cstat-no" title="statement not covered" >                key={tab}</span>
+<span class="cstat-no" title="statement not covered" >                className={`bg-white h-fit px-2 py-1 rounded cursor-pointer whitespace-nowrap ${tab.toLowerCase() === activeTab ? "bg-opacity-100" : "bg-opacity-50"}`}</span>
+<span class="cstat-no" title="statement not covered" >                onClick={() =&gt; setActiveTab(tab.toLowerCase())}&gt;</span>
+<span class="cstat-no" title="statement not covered" >                {tab}</span>
+<span class="cstat-no" title="statement not covered" >              &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >            ))}</span>
 <span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >        ) : (</span>
-<span class="cstat-no" title="statement not covered" >          &lt;main className="flex flex-col items-center"&gt;</span>
-<span class="cstat-no" title="statement not covered" >              &lt;Button</span>
-<span class="cstat-no" title="statement not covered" >                text="Login"</span>
-<span class="cstat-no" title="statement not covered" >                className="bg-blue-500 text-white p-3 rounded mr-4"</span>
-<span class="cstat-no" title="statement not covered" >                onClick={() =&gt; navigate("/login")}</span>
-<span class="cstat-no" title="statement not covered" >              /&gt;</span>
-<span class="cstat-no" title="statement not covered" >              &lt;Tracks /&gt;</span>
-<span class="cstat-no" title="statement not covered" >              {/* &lt;Button</span>
-<span class="cstat-no" title="statement not covered" >                text="Sign Up"</span>
-<span class="cstat-no" title="statement not covered" >                className="bg-green-500 text-white p-3 rounded"</span>
-<span class="cstat-no" title="statement not covered" >                onClick={() =&gt; navigate("/signup")}</span>
-<span class="cstat-no" title="statement not covered" >              /&gt; */}</span>
-<span class="cstat-no" title="statement not covered" >          &lt;/main&gt;</span>
-<span class="cstat-no" title="statement not covered" >        )}</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div className="mt-10 mx-auto"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "upload a package" &amp;&amp; &lt;Upload /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "get packages by query" &amp;&amp; &lt;GetPackages /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "reset the rigestiry" &amp;&amp; &lt;Reset /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "update a package" &amp;&amp; &lt;Update /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "package rate" &amp;&amp; &lt;Rate /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "package cost" &amp;&amp; &lt;Cost /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "get a package" &amp;&amp; &lt;GetPackage /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "add a user" &amp;&amp; &lt;AddUser /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "add a group" &amp;&amp; &lt;AddGroup /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "delete a group" &amp;&amp; &lt;DeleteGroup /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      ) : (</span>
+<span class="cstat-no" title="statement not covered" >        &lt;main className="flex flex-col items-center"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;button className="bg-blue-500 text-white p-3 rounded mr-4" onClick={() =&gt; navigate("/login")} &gt;Login&lt;/button&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;Tracks /&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/main&gt;</span>
+<span class="cstat-no" title="statement not covered" >      )}</span>
 <span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >  );</span>
 <span class="cstat-no" title="statement not covered" >};</span>
@@ -337,7 +307,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-05T02:54:39.393Z
+                at 2024-12-05T23:08:38.382Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

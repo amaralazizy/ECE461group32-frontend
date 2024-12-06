@@ -5,7 +5,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     // include: ["backend/src/rating/tests__/**.test.ts"],
-    include: ["tests/**/*.test.ts", "tests/**/*.test.tsx"],
+    include: ["tests/**/*.test.ts", "tests/**/*.test.tsx", "e2e-tests/**/*.test.ts", "e2e-tests/**/*.test.tsx"],
     coverage: {
       reporter: ['text', 'text-summary', 'json', 'html'],
       reportsDirectory: "./coverage", // Optional, specify output directory
@@ -25,7 +25,6 @@ export default defineConfig({
         "**/*.config.js",
         "**/*.config.ts",
         "**/*.d.ts",
-        "**/api.ts",
         "**/src/main.tsx"
       ],
       thresholds: {

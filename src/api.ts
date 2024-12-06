@@ -1,13 +1,11 @@
 import axios from "axios";
-// import { env } from "process";
 
-// const API_BASE_URL = import.meta.env.API_BASE_URL;
-const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/prod";
+// const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/prod";
+const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/front";
 if (!localStorage.getItem("authToken")) {
   localStorage.setItem("authToken", "");
 }
 const authToken = localStorage.getItem("authToken");
-// const githubToken = env.GITHUB_TOKEN;
 
 export const registerUser = async (
   username: string,
@@ -50,52 +48,7 @@ export const registerUser = async (
 };
 
 export const authenticateUser = async (username: string, password: string, isAdministrator: boolean) => {
-  const passwordField = document.getElementById("password");
-  console.log(passwordField);
   try {
-    console.log(JSON.stringify({ password }));
-    console.log("Authenticating user...");
-    const response = await axios.put(
-      `${API_BASE_URL}/authenticate`,
-      {
-        User: {
-          name: username,
-          isAdmin: isAdministrator
-        },
-        Secret: {
-          password: password
-        }
-      },
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    );
-    console.log("authenticate response:", response);
-    if (response.status === 200 || response.status === 201) {
-      console.log("User authenticated successfully.");
-      // console.log(response.data);
-      return response.data;
-    } else if (response.status === 400) {
-      throw new Error("There is missing field(s) in the AuthenticationRequest or it is formed improperly.");
-    } else if (response.status === 401) {
-      throw new Error("The user or password is invalid.");
-    } else if (response.status === 501) {
-      throw new Error("This system does not support authentication.");
-    } else {
-      throw new Error("An unknown error occurred.");
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const authenticateUser2 = async (username: string, password: string, isAdministrator: boolean) => {
-  // const passwordField = document.getElementById("password");
-  // console.log(passwordField);
-  try {
-    // console.log(JSON.stringify({ password }));
     console.log("Authenticating user...");
     const response = await axios.put(
       `${API_BASE_URL}/authenticate2`,
@@ -114,10 +67,8 @@ export const authenticateUser2 = async (username: string, password: string, isAd
         }
       }
     );
-    console.log("authenticate response:", response);
     if (response.status === 200 || response.status === 201) {
       console.log("User authenticated successfully.");
-      // console.log(response.data);
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the AuthenticationRequest or it is formed improperly.");
@@ -173,37 +124,6 @@ export const getGroupsAndPermissions = async () => {
   }
 };
 
-// export const addPermission = async (permissionName: string) => {
-//   try {
-//     const response = await axios.post(
-//       `${API_BASE_URL}/permission`,
-//       {
-//         name: permissionName
-//       },
-//       {
-//         headers: {
-//           "X-Authorization": authToken,
-//           "Content-Type": "application/json"
-//         }
-//       }
-//     );
-//     if (response.status === 201) {
-//       console.log("Permission added successfully.");
-//       return response.data;
-//     } else if (response.status === 400) {
-//       throw new Error("There is missing field(s) in the PermissionRequest or it is formed improperly.");
-//     } else if (response.status === 403) {
-//       throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-//     } else if (response.status === 409) {
-//       throw new Error("The permission already exists.");
-//     } else {
-//       throw new Error(`An unknown error occurred. ${response.status}`);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
 export const addGroup = async (groupName: string, permissions: string[]) => {
   try {
     const response = await axios.post(
@@ -221,11 +141,10 @@ export const addGroup = async (groupName: string, permissions: string[]) => {
     );
 
     console.log("Group added successfully.");
-    return response.data; // Return the data for success
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        // Server responded with an error
         const status = error.response.status;
         if (status === 400) {
           throw new Error("There is missing field(s) in the GroupRequest or it is formed improperly.");
@@ -241,14 +160,11 @@ export const addGroup = async (groupName: string, permissions: string[]) => {
           );
         }
       } else if (error.request) {
-        // No response received from the server
         throw new Error("No response received from the server.");
       } else {
-        // Error setting up the request
         throw new Error(error.message || "An error occurred while making the request.");
       }
     } else {
-      // Handle unexpected non-Axios errors
       throw new Error("An unexpected error occurred.");
     }
   }
@@ -378,7 +294,7 @@ export const getPackageRate = async (packageId: string) => {
   }
 };
 
-export const getPackageCost = async (packageId: string, dependency: boolean = false) => {
+export const getPackageCost = async (packageId: string, dependency: boolean = false) => {  
   try {
     const response = await axios.get(`${API_BASE_URL}/package/${packageId}/cost`, {
       params: { dependency },
@@ -387,7 +303,8 @@ export const getPackageCost = async (packageId: string, dependency: boolean = fa
       }
     });
     if (response.status === 200) {
-      return response.data;
+      const cost  = response.data[Object.keys(response.data)[0]].totalCost
+      return cost;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageID");
     } else if (response.status === 403) {
@@ -430,7 +347,7 @@ export const searchPackagesByRegEx = async (regex: string) => {
   } catch (error) {
     if (error instanceof Error) {
       console.error(error.message);
-      throw error; // Re-throw the error to ensure the caller is aware of it
+      throw error;
     } else {
       throw new Error("An unexpected error occurred.");
     }
@@ -520,35 +437,6 @@ export const uploadPackageByContent = async (content: string, JSProgram: string,
     console.log(error);
   }
 };
-
-// export const getPackageByURL = async (owner: string, repo: string) => {
-//   const GitHubAPI = `https://api.github.com/repos/${owner}/${repo}`;
-//   try {
-//     const response = await axios.get(GitHubAPI, {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: githubToken
-//       }
-//     });
-
-//     if (response.status === 200) {
-//       console.log("Package retrieved successfully.");
-//       return response.data;
-//     } else if (response.status === 400) {
-//       throw new Error("There is missing field(s) in the URL or it is formed improperly, or is invalid.");
-//     } else if (response.status === 401) {
-//       throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-//     } else if (response.status === 403) {
-//       throw new Error("You do not have permission to access this package.");
-//     } else if (response.status === 404) {
-//       throw new Error("Package does not exist.");
-//     } else {
-//       throw new Error(`An unknown error occurred. ${response.status}`);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 export const deleteGroup = async (groupId: number) => {
   try {

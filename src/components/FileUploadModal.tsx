@@ -172,7 +172,6 @@
 import React, { useRef, useState } from "react";
 import { Card, CardContent, CardFooter } from "./ui/card";
 import { Input } from "./ui/input";
-import { Button } from "./ui/button";
 import { cn, convertZipToBase64 } from "../lib/utils";
 
 interface FileUploadProps {
@@ -224,8 +223,7 @@ export function FileUploadModal({ className, onFileUpload, ...props }: FileUploa
       <CardContent className="p-6 space-y-4">
         <div
           className="border-2 border-dashed border-gray-200 rounded-lg flex flex-col gap-1 p-6 items-center cursor-pointer"
-          onClick={handleClick}
-        >
+          onClick={handleClick}>
           <FileIcon className="w-12 h-12" />
           <span className="text-xl font-medium text-gray-500">Click to browse</span>
           <span className="text-xl text-gray-500">Only ZIP Files</span>
@@ -243,16 +241,18 @@ export function FileUploadModal({ className, onFileUpload, ...props }: FileUploa
             className="text-xl file:text-xl"
           />
         </div>
-        {feedbackMessage[0] !== "" && <p className={`italic ${feedbackMessage[1] ? "text-green-500" : "text-red-500"}`}>{feedbackMessage[0]}</p>}
+        {feedbackMessage[0] !== "" && (
+          <p className={`italic ${feedbackMessage[1] ? "text-green-500" : "text-red-500"}`}>{feedbackMessage[0]}</p>
+        )}
       </CardContent>
       <CardFooter>
-        <Button
-          text={loading ? "Uploading..." : "Upload"}
+        <button
           type="button"
           onClick={handleUpload}
           className="h-12 rounded-lg px-10 text-xl bg-slate-900 text-white hover:bg-opacity-90 shadow-lg self-end"
-          disabled={loading}
-        />
+          disabled={loading}>
+          {loading ? "Uploading..." : "Upload"}
+        </button>
       </CardFooter>
     </Card>
   );

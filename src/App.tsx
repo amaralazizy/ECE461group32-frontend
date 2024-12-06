@@ -38,7 +38,6 @@ function App(): JSX.Element {
             path="/login"
             element={!isLoggedIn ? <Login onLoginSuccess={handleLoginSuccess} /> : <Navigate to="/" />}
           />
-          {/* <Route path="/signup" element={!isLoggedIn ? <Signup /> : <Navigate to="/" />} /> */}
         </Routes>
       </Router>
   );

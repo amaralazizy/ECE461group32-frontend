@@ -1,14 +1,12 @@
 import  {useState} from "react";
 import { getTracks } from "../api";
-import { Button } from "./ui/button";
 import { cn } from "../lib/utils";
 
 type TracksProps = {
   className?: string;
-  props?: string[];
 };
 
-export default function Tracks({className, ...props}:TracksProps): JSX.Element {
+export default function Tracks({className}:TracksProps): JSX.Element {
     const [tracks, setTracks] = useState([]);
     const [error, setError] = useState("");
 
@@ -29,12 +27,12 @@ export default function Tracks({className, ...props}:TracksProps): JSX.Element {
     
     return (
       <div className="flex flex-col gap-5">
-        <Button
+        <button
           onClick={handleGetTracks}
-          text="Get Tracks"
           className={cn("bg-blue-500 text-white p-3 rounded m-8", className)}
-          {...props}
-        />
+        >
+          Get Tracks
+        </button>
         {error ? (
           <h2 className="text-red-500 italic">{error}</h2>
         ) : (
