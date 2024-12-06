@@ -170,7 +170,7 @@ export const addGroup = async (groupName: string, permissions: string[]) => {
   }
 };
 
-export const getPackages = async (queryParams: object, offset?: number) => {
+export const getPackages = async (queryParams: object, offset: number = 1) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/packages`, queryParams, {
       params: { offset },
@@ -294,7 +294,7 @@ export const getPackageRate = async (packageId: string) => {
   }
 };
 
-export const getPackageCost = async (packageId: string, dependency: boolean = false) => {  
+export const getPackageCost = async (packageId: string, dependency: boolean = false) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/package/${packageId}/cost`, {
       params: { dependency },
@@ -303,7 +303,7 @@ export const getPackageCost = async (packageId: string, dependency: boolean = fa
       }
     });
     if (response.status === 200) {
-      const cost  = response.data[Object.keys(response.data)[0]].totalCost
+      const cost = response.data[Object.keys(response.data)[0]].totalCost;
       return cost;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageID");
