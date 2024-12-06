@@ -21,7 +21,7 @@ export default function Cost(): JSX.Element {
     try {
       // Replace with the actual API endpoint to get the package cost
       const response = await getPackageCost(packageId);
-    //   console.log(response);
+      //   console.log(response);
       if (response) {
         setCost(response);
         // console.log(response);
@@ -62,7 +62,7 @@ export default function Cost(): JSX.Element {
           {responseMessage[0]}
         </span>
       )}
-      {cost !== null && <div className="mt-4 text-3xl text-white">Package Cost: ${cost}</div>}
+      {cost !== null && <div className="mt-4 text-3xl text-white">Package Cost: {cost} MB</div>}
     </div>
   );
 }

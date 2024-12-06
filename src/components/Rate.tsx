@@ -4,17 +4,17 @@ import { getPackageRate } from "../api";
 export default function Rate(): JSX.Element {
     const [packageId, setPackageId] = useState("");
     const [rate, setRate] = useState<number | null>(null);
-    const [responseMessage, setResponseMessage] = useState("");
+    const [responseMessage, setResponseMessage] = useState< [string, "success" | "error"]| null>("");
 
     const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPackageId(e.target.value);
-        setResponseMessage(""); // Clear response message when user starts typing
+        setResponseMessage(null); // Clear response message when user starts typing
         setRate(null); // Clear rate when user starts typing
     };
 
     const handleGetRate = async () => {
         if (!packageId) {
-            setResponseMessage("Please enter a package ID.");
+            setResponseMessage(["Please enter a package ID.", "error"]);
             return;
         }
 
@@ -23,12 +23,12 @@ export default function Rate(): JSX.Element {
             const response = await getPackageRate(packageId);
             if (response) {
                 setRate(response.rate);
-                setResponseMessage("Package rate retrieved successfully.");
+                setResponseMessage(["Package rate retrieved successfully.", "success"]);
             } else {
-                setResponseMessage("Failed to get the package rate. Please try again.");
+                setResponseMessage(["Failed to get the package rate. Please try again.", "error"]);
             }
         } catch {
-            setResponseMessage("An error occurred. Please try again later.");
+            setResponseMessage(["An error occurred. Please try again later.", "error"]);
         }
     };
 
@@ -53,7 +53,7 @@ export default function Rate(): JSX.Element {
             <button onClick={handleGetRate} className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg">
                 Get Package Rate
             </button>
-            {responseMessage && <span className="text-red-500 mt-2">{responseMessage}</span>}
+            {responseMessage && <span className={`${responseMessage[0] === "error" ? "text-red-500" : "text-green-500"} mt-2`}>{responseMessage[0]}</span>}
             {rate !== null && (
                 <div className="mt-4 text-3xl text-white">
                     Package Rate: {rate}
