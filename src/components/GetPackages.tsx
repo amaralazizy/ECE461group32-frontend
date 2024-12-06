@@ -4,18 +4,18 @@ import { getPackages } from "../api";
 export default function GetPackages(): JSX.Element {
   const [query, setQuery] = useState<string>("");
   const [numOfPages, setnumOfPages] = useState<number>(1);
-  const [responseMessage, setResponseMessage] = useState<string | null>(null);
+  const [responseMessage, setResponseMessage] = useState<[string, "success" | "error"] | null>(null);
 
   const handleQuery = async () => {
     try {
       const data = await getPackages(JSON.parse(query), numOfPages);
       if (data) {
-        setResponseMessage(JSON.stringify(data));
+        setResponseMessage([JSON.stringify(data), "success"]);
       } else {
-        setResponseMessage("No packages found");
+        setResponseMessage(["No packages found", "error"]);
       }
     } catch (error) {
-      setResponseMessage("An error occurred while fetching packages");
+      setResponseMessage(["An error occurred while fetching packages", "error"]);
       console.error(error);
     }
   };
@@ -52,7 +52,11 @@ export default function GetPackages(): JSX.Element {
       <button onClick={handleQuery} className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg">
         Query Package
       </button>
-      {responseMessage && <span className="text-red-500 mt-2">{responseMessage}</span>}
+      {responseMessage && (
+        <span className={`${responseMessage[0] === "error" ? "text-red-500" : "text-white"} mt-2`}>
+          {responseMessage[0]}
+        </span>
+      )}
     </div>
   );
 }
