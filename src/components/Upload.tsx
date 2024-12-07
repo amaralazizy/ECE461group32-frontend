@@ -6,7 +6,7 @@ interface UploadProps {
   ariaLabel: string;
 }
 
-export default function Upload({ariaLabel}: UploadProps): JSX.Element {
+export default function Upload({ ariaLabel }: UploadProps): JSX.Element {
   const URLRegEx =
     /(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/i;
   const [url, setUrl] = React.useState("");
@@ -16,8 +16,6 @@ export default function Upload({ariaLabel}: UploadProps): JSX.Element {
     setUrl(e.target.value);
     setErrorMessage("");
   };
-
-
 
   const handleUrlSubmit = async () => {
     try {
@@ -51,10 +49,12 @@ export default function Upload({ariaLabel}: UploadProps): JSX.Element {
   };
 
   return (
-    <div className="min-w-[700px] flex gap-10 items-center" aria-label={ariaLabel}> 
+    <div className="min-w-[700px] flex gap-10 items-center" aria-label={ariaLabel}>
       <div>
-        <h2 className="text-3xl text-white mb-4">Upload by File</h2>
-        <FileUploadModal onFileUpload={handleFileUpload} />
+        <label className="text-3xl text-white mb-4" htmlFor="file-upload">
+          Upload by File
+        </label>
+        <FileUploadModal onFileUpload={handleFileUpload} id="file-upload" />
       </div>
       <div className="bg-white h-96 w-[1px]"></div>
       <div className="flex flex-col items-center gap-10">
