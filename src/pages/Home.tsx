@@ -42,15 +42,12 @@ const Home: React.FC<{ isLoggedIn: boolean; onLogout: () => void }> = ({ isLogge
             }}>
             Logout
           </button>
-          <div
-            className="flex flex-wrap items-center justify-center gap-10 rounded"
-            aria-owns="upload-a-package get-packages-by-query reset-the-rigestiry update-a-package
-            package-rate package-cost get-a-package add-a-user add-a-group delete-a-group" role="tabpanel">
+          <div className="flex flex-wrap items-center justify-center gap-10 rounded" role="tabpanel">
             {tabs.map((tab) => (
               <div
                 role="tab"
                 key={tab}
-                id={(tab.toLowerCase()).replace(" ", "-")}
+                id={tab.toLowerCase().replace(" ", "-")}
                 className={`bg-white h-fit px-2 py-1 rounded cursor-pointer whitespace-nowrap ${tab.toLowerCase() === activeTab ? "bg-opacity-100" : "bg-opacity-50"}`}
                 onClick={() => setActiveTab(tab.toLowerCase())}
                 aria-label={tab}>
