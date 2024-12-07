@@ -20,7 +20,7 @@ const Home: React.FC<{ isLoggedIn: boolean; onLogout: () => void }> = ({ isLogge
     "Update a package",
     "Package rate",
     "Package cost",
-    "Reset the rigestiry",
+    "Reset the registry",
     "Get a package",
     "Add a user",
     "Add a group",
@@ -42,23 +42,33 @@ const Home: React.FC<{ isLoggedIn: boolean; onLogout: () => void }> = ({ isLogge
             }}>
             Logout
           </button>
-          <div className="flex flex-wrap items-center justify-center gap-10 rounded" role="tabpanel">
+          <div
+            className="flex flex-wrap items-center justify-center gap-10 rounded"
+            role="tablist"
+            aria-label="Action tabs">
             {tabs.map((tab) => (
-              <div
+              <button
                 role="tab"
                 key={tab}
-                id={tab.toLowerCase().replace(" ", "-")}
-                className={`bg-white h-fit px-2 py-1 rounded cursor-pointer whitespace-nowrap ${tab.toLowerCase() === activeTab ? "bg-opacity-100" : "bg-opacity-50"}`}
+                id={tab.toLowerCase().replace(/\s+/g, "-")}
+                aria-selected={tab.toLowerCase() === activeTab}
+                className={`bg-white h-fit px-2 py-1 rounded cursor-pointer whitespace-nowrap ${
+                  tab.toLowerCase() === activeTab ? "bg-opacity-100" : "bg-opacity-50"
+                }`}
                 onClick={() => setActiveTab(tab.toLowerCase())}
-                aria-label={tab}>
+                aria-controls={`${tab.toLowerCase().replace(/\s+/g, "-")}-panel`}>
                 {tab}
-              </div>
+              </button>
             ))}
           </div>
-          <div className="mt-10 mx-auto">
+          <div
+            className="mt-10 mx-auto"
+            role="tabpanel"
+            id={`${activeTab.replace(/\s+/g, "-")}-panel`}
+            aria-labelledby={activeTab.replace(/\s+/g, "-")}>
             {activeTab === "upload a package" && <Upload ariaLabel={activeTab} />}
             {activeTab === "get packages by query" && <GetPackages ariaLabel={activeTab} />}
-            {activeTab === "reset the rigestiry" && <Reset ariaLabel={activeTab} />}
+            {activeTab === "reset the registry" && <Reset ariaLabel={activeTab} />}
             {activeTab === "update a package" && <Update ariaLabel={activeTab} />}
             {activeTab === "package rate" && <Rate ariaLabel={activeTab} />}
             {activeTab === "package cost" && <Cost ariaLabel={activeTab} />}
