@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { getPackageCost } from "../api";
 
-export default function Cost(): JSX.Element {
+interface CostProps {
+  ariaLabel: string;
+}
+
+export default function Cost({ariaLabel}: CostProps): JSX.Element {
   const [packageId, setPackageId] = useState("");
   const [cost, setCost] = useState<number | null>(null);
   const [responseMessage, setResponseMessage] = useState<[string, string] | null>(null);
@@ -41,7 +45,7 @@ export default function Cost(): JSX.Element {
   };
 
   return (
-    <div className="min-w-[700px] flex flex-col items-center gap-10">
+    <div className="min-w-[700px] flex flex-col items-center gap-10" aria-label={ariaLabel}>
       <label className="text-3xl text-white" htmlFor="packageId">
         Get Package Cost by ID
       </label>

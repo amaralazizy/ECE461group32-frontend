@@ -24,7 +24,7 @@ const Home: React.FC<{ isLoggedIn: boolean; onLogout: () => void }> = ({ isLogge
     "Get a package",
     "Add a user",
     "Add a group",
-    "Delete a group",
+    "Delete a group"
   ];
   const [activeTab, setActiveTab] = useState(tabs[0].toLowerCase()); // Use the first tab as default
 
@@ -42,33 +42,40 @@ const Home: React.FC<{ isLoggedIn: boolean; onLogout: () => void }> = ({ isLogge
             }}>
             Logout
           </button>
-          <div className="flex flex-wrap items-center justify-center gap-10 rounded">
+          <div
+            className="flex flex-wrap items-center justify-center gap-10 rounded"
+            aria-owns="upload-a-package get-packages-by-query reset-the-rigestiry update-a-package
+            package-rate package-cost get-a-package add-a-user add-a-group delete-a-group">
             {tabs.map((tab) => (
               <div
                 role="tab"
                 key={tab}
+                id={(tab.toLowerCase()).replace(" ", "-")}
                 className={`bg-white h-fit px-2 py-1 rounded cursor-pointer whitespace-nowrap ${tab.toLowerCase() === activeTab ? "bg-opacity-100" : "bg-opacity-50"}`}
-                onClick={() => setActiveTab(tab.toLowerCase())}>
+                onClick={() => setActiveTab(tab.toLowerCase())}
+                aria-label={tab}>
                 {tab}
               </div>
             ))}
           </div>
           <div className="mt-10 mx-auto">
-            {activeTab === "upload a package" && <Upload />}
-            {activeTab === "get packages by query" && <GetPackages />}
-            {activeTab === "reset the rigestiry" && <Reset />}
-            {activeTab === "update a package" && <Update />}
-            {activeTab === "package rate" && <Rate />}
-            {activeTab === "package cost" && <Cost />}
-            {activeTab === "get a package" && <GetPackage />}
-            {activeTab === "add a user" && <AddUser />}
-            {activeTab === "add a group" && <AddGroup />}
-            {activeTab === "delete a group" && <DeleteGroup />}
+            {activeTab === "upload a package" && <Upload ariaLabel={activeTab} />}
+            {activeTab === "get packages by query" && <GetPackages ariaLabel={activeTab} />}
+            {activeTab === "reset the rigestiry" && <Reset ariaLabel={activeTab} />}
+            {activeTab === "update a package" && <Update ariaLabel={activeTab} />}
+            {activeTab === "package rate" && <Rate ariaLabel={activeTab} />}
+            {activeTab === "package cost" && <Cost ariaLabel={activeTab} />}
+            {activeTab === "get a package" && <GetPackage ariaLabel={activeTab} />}
+            {activeTab === "add a user" && <AddUser ariaLabel={activeTab} />}
+            {activeTab === "add a group" && <AddGroup ariaLabel={activeTab} />}
+            {activeTab === "delete a group" && <DeleteGroup ariaLabel={activeTab} />}
           </div>
         </div>
       ) : (
         <main className="flex flex-col items-center">
-          <button className="bg-blue-500 text-white p-3 rounded mr-4" onClick={() => navigate("/login")} >Login</button>
+          <button className="bg-blue-500 text-white p-3 rounded mr-4" onClick={() => navigate("/login")}>
+            Login
+          </button>
           <Tracks />
         </main>
       )}

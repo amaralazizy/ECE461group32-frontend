@@ -192,7 +192,11 @@ import React, { useState, useEffect } from "react";
 import { registerUser, getGroupsAndPermissions } from "../api";
 import Loading from "./ui/loading";
 
-const AddUser: React.FC = () => {
+interface AddUserProps {
+  ariaLabel: string;
+}
+
+const AddUser: ({ ariaLabel }: AddUserProps)  => JSX.Element = ({ ariaLabel }: AddUserProps) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -232,7 +236,6 @@ const AddUser: React.FC = () => {
   const handleAddUser = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    
     if (password !== confirmPassword) {
       setFeedbackMessage({ message: "Passwords do not match", type: "error" });
       setLoading(false);
@@ -263,7 +266,7 @@ const AddUser: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 py-7 px-60 flex flex-col items-center text-3xl">
+    <div className="min-h-screen bg-gray-900 py-7 px-60 flex flex-col items-center text-3xl" aria-label={ariaLabel}>
       <h2 className="text-3xl font-bold text-white mb-6">Sign Up</h2>
       <form onSubmit={handleAddUser} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
@@ -312,8 +315,7 @@ const AddUser: React.FC = () => {
             onClick={() => {
               setGrantPermissions(true);
               setAssignToGroup(false);
-            }}
-          >
+            }}>
             Grant Permission
           </button>
           <button
@@ -322,8 +324,7 @@ const AddUser: React.FC = () => {
             onClick={() => {
               setAssignToGroup(true);
               setGrantPermissions(false);
-            }}
-          >
+            }}>
             Assign to Group
           </button>
         </div>
@@ -335,8 +336,7 @@ const AddUser: React.FC = () => {
             <select
               id="groups"
               onChange={handleGroups}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
               <option value="">Select a group</option>
               {groups.map((group) => (
                 <option key={group} value={group}>
@@ -375,13 +375,12 @@ const AddUser: React.FC = () => {
             )}
           </div>
         )}
-          {feedbackMessage.type === "error" && <p className="text-red-500 italic mb-4">{feedbackMessage.message}</p>}
-          {feedbackMessage.type === "success" && <p className="text-green-500 italic mb-4">{feedbackMessage.message}</p>}
+        {feedbackMessage.type === "error" && <p className="text-red-500 italic mb-4">{feedbackMessage.message}</p>}
+        {feedbackMessage.type === "success" && <p className="text-green-500 italic mb-4">{feedbackMessage.message}</p>}
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Add User
           </button>
         </div>

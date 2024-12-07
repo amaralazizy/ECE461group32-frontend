@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { getPackageRate } from "../api";
 
-export default function Rate(): JSX.Element {
+interface RateProps {
+  ariaLabel: string;
+}
+
+export default function Rate({ ariaLabel }: RateProps): JSX.Element {
   const [packageId, setPackageId] = useState("");
   const [rate, setRate] = useState<string | null>(null);
   const [responseMessage, setResponseMessage] = useState<[string, "success" | "error"] | null>("");
@@ -39,7 +43,7 @@ export default function Rate(): JSX.Element {
   };
 
   return (
-    <div className="min-w-[700px] flex flex-col items-center gap-10">
+    <div className="min-w-[700px] flex flex-col items-center gap-10" aria-label={ariaLabel}>
       <label className="text-3xl text-white" htmlFor="packageId">
         Get Package Rate by ID
       </label>

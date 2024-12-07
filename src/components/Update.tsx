@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { updatePackageById } from '../api';
 
-export default function Update(): JSX.Element {
+interface UpdateProps {
+  ariaLabel: string;
+}
+
+export default function Update({ariaLabel}: UpdateProps): JSX.Element {
   const [packageId, setPackageId] = useState('');
   const [updateData, setUpdateData] = useState('');
   const [responseMessage, setResponseMessage] = useState('');
@@ -44,8 +48,10 @@ export default function Update(): JSX.Element {
   };
 
   return (
-    <div className="min-w-[700px] flex flex-col items-center gap-10">
-      <label className="text-3xl text-white" htmlFor="packageId">Update Package by ID</label>
+    <div className="min-w-[700px] flex flex-col items-center gap-10" aria-label={ariaLabel}>
+      <label className="text-3xl text-white" htmlFor="packageId">
+        Update Package by ID
+      </label>
       <input
         id="packageId"
         type="text"

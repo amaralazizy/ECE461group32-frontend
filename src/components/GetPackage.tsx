@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { getPackageById, searchPackagesByRegEx } from "../api";
-// import { Button } from "./ui/button";
 import {downloadFile} from "../lib/utils";
 
+interface GetPackageProps {
+  ariaLabel: string;
+}
 
-const GetPackage: React.FC = () => {
+
+const GetPackage: ({ ariaLabel }: GetPackageProps) => JSX.Element = ({ ariaLabel }: GetPackageProps) => {
   const [packageId, setPackageId] = useState("");
   const [regex, setRegex] = useState("");
   const [result, setResult] = useState<string | null>(null);
@@ -13,8 +16,7 @@ const GetPackage: React.FC = () => {
   const [searchType, setSearchType] = useState<"regex" | "id" | null>(null);
   const [inType, setInType] = useState(false);
   const [content, setContent] = useState<string | null>(null);
-    const [name, setName] = useState<string | null>(null);
-
+  const [name, setName] = useState<string | null>(null);
 
   const handleGetPackageById = async () => {
     if (!packageId) {
@@ -64,7 +66,9 @@ const GetPackage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen text-white bg-gray-900 py-7 px-60 flex flex-col items-center">
+    <div
+      className="min-h-screen text-white bg-gray-900 py-7 px-60 flex flex-col items-center"
+      aria-label={ariaLabel}>
       <div className="flex flex-col gap-5">
         {!inType && (
           <div className="flex gap-10 justify-center">
@@ -148,16 +152,19 @@ const GetPackage: React.FC = () => {
         )}
         {loading && <p className="text-gray-700 italic">Loading...</p>}
         {error && <p className="text-red-500 italic">{error}</p>}
-        {result && !content &&<code className=""><pre className="mx-auto text-white p-4 mt-4 rounded max-w-96 break-words whitespace-normal">{result}</pre></code>}
+        {result && !content && (
+          <code className="">
+            <pre className="mx-auto text-white p-4 mt-4 rounded max-w-96 break-words whitespace-normal">{result}</pre>
+          </code>
+        )}
         {content && (
-                <a
-                    href={downloadFile(content, `${name?.replace(" ", "_")}.zip`).url}
-                    download={`${name?.replace(" ", "_")}.zip`}
-                    className="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg"
-                >
-                    Click here to download
-                </a>
-            )}
+          <a
+            href={downloadFile(content, `${name?.replace(" ", "_")}.zip`).url}
+            download={`${name?.replace(" ", "_")}.zip`}
+            className="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg">
+            Click here to download
+          </a>
+        )}
       </div>
     </div>
   );

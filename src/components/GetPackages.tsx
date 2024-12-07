@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { getPackages } from "../api";
 
-export default function GetPackages(): JSX.Element {
+interface GetPackagesProps {
+  ariaLabel: string;
+}
+
+export default function GetPackages({ariaLabel}: GetPackagesProps): JSX.Element {
   const [query, setQuery] = useState<string>("");
   const [numOfPages, setnumOfPages] = useState<number>(1);
   const [responseMessage, setResponseMessage] = useState<[string, "success" | "error"] | null>(null);
@@ -27,7 +31,7 @@ export default function GetPackages(): JSX.Element {
   };
 
   return (
-    <div className="min-w-[700px] flex flex-col items-center gap-10">
+    <div className="min-w-[700px] flex flex-col items-center gap-10" aria-label={ariaLabel}>
       <label className="text-3xl text-white" htmlFor="packageQuery">
         Get Packages by query
       </label>

@@ -87,6 +87,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         {error && <p className="text-red-500 italic mb-4">{error}</p>}
         <div className="flex items-center justify-between">
           <button
+            id="login-button"
             type="submit"
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Login

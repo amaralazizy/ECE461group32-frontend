@@ -2,7 +2,11 @@ import React from "react";
 import { FileUploadModal } from "./FileUploadModal";
 import { uploadPackageByContent, uploadPackageByURL } from "../api";
 
-export default function Upload(): JSX.Element {
+interface UploadProps {
+  ariaLabel: string;
+}
+
+export default function Upload({ariaLabel}: UploadProps): JSX.Element {
   const URLRegEx =
     /(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)?/i;
   const [url, setUrl] = React.useState("");
@@ -47,7 +51,7 @@ export default function Upload(): JSX.Element {
   };
 
   return (
-    <div className="min-w-[700px] flex gap-10 items-center">
+    <div className="min-w-[700px] flex gap-10 items-center" aria-label={ariaLabel}> 
       <div>
         <h2 className="text-3xl text-white mb-4">Upload by File</h2>
         <FileUploadModal onFileUpload={handleFileUpload} />
