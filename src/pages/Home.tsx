@@ -45,7 +45,7 @@ const Home: React.FC<{ isLoggedIn: boolean; onLogout: () => void }> = ({ isLogge
           <div
             className="flex flex-wrap items-center justify-center gap-10 rounded"
             aria-owns="upload-a-package get-packages-by-query reset-the-rigestiry update-a-package
-            package-rate package-cost get-a-package add-a-user add-a-group delete-a-group">
+            package-rate package-cost get-a-package add-a-user add-a-group delete-a-group" role="tabpanel">
             {tabs.map((tab) => (
               <div
                 role="tab"
