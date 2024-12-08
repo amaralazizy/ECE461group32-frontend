@@ -323,7 +323,7 @@ export const getPackageCost = async (packageId: string, dependency: boolean = fa
 
 export const searchPackagesByRegEx = async (regex: string) => {
   // console.log("Searching packages by regex..";
-  console.log(authToken);
+  // console.log(authToken);
   try {
     const response = await axios.post(
       `${API_BASE_URL}/package/byRegEx`,
@@ -336,7 +336,7 @@ export const searchPackagesByRegEx = async (regex: string) => {
       }
     );
     if (response.status === 200) {
-      
+
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageRegEx or it is formed improperly, or is invalid");
