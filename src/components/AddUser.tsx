@@ -139,6 +139,7 @@ const AddUser: ({ ariaLabel }: AddUserProps)  => JSX.Element = ({ ariaLabel }: A
           </button>
         </div>
         {assignToGroup && (
+          groups?.length > 0 ? (
           <div className="mb-4">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="groups">
               Group
@@ -154,7 +155,7 @@ const AddUser: ({ ariaLabel }: AddUserProps)  => JSX.Element = ({ ariaLabel }: A
                 </option>
               ))}
             </select>
-          </div>
+          </div>): <div className="text-red-500 italic">No groups available</div>
         )}
         {grantPermissions && (
           <div className="mb-4">
