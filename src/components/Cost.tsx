@@ -44,7 +44,6 @@ export default function Cost({ariaLabel}: CostProps): JSX.Element {
     }
   };
 
-
   return (
     <div className="min-w-[700px] flex flex-col items-center gap-10" aria-label={ariaLabel}>
       <label className="text-3xl text-white" htmlFor="packageId">
