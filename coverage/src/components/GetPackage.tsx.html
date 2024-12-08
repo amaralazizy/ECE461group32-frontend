@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.33% </span>
+                <span class="strong">87.41% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>120/139</span>
+                <span class='fraction'>125/143</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.33% </span>
+                <span class="strong">87.41% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>120/139</span>
+                <span class='fraction'>125/143</span>
             </div>
         
             
@@ -229,13 +229,23 @@
 <a name='L164'></a><a href='#L164'>164</a>
 <a name='L165'></a><a href='#L165'>165</a>
 <a name='L166'></a><a href='#L166'>166</a>
-<a name='L167'></a><a href='#L167'>167</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a>
+<a name='L171'></a><a href='#L171'>171</a>
+<a name='L172'></a><a href='#L172'>172</a>
+<a name='L173'></a><a href='#L173'>173</a>
+<a name='L174'></a><a href='#L174'>174</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
@@ -245,7 +255,6 @@
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">3x</span>
@@ -294,6 +303,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
@@ -380,8 +391,11 @@
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-yes">27x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">27x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -395,13 +409,16 @@
 <span class="cline-any cline-yes">27x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from "react";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState } from "react";
 import { getPackageById, searchPackagesByRegEx } from "../api";
-// import { Button } from "./ui/button";
 import {downloadFile} from "../lib/utils";
 &nbsp;
+interface GetPackageProps {
+  ariaLabel: string;
+}
 &nbsp;
-const GetPackage: React.FC = () =&gt; {
+&nbsp;
+const GetPackage: ({ ariaLabel }: GetPackageProps) =&gt; JSX.Element = ({ ariaLabel }: GetPackageProps) =&gt; {
   const [packageId, setPackageId] = useState("");
   const [regex, setRegex] = useState("");
   const [result, setResult] = useState&lt;string | null&gt;(null);
@@ -410,8 +427,7 @@ const GetPackage: React.FC = () =&gt; {
   const [searchType, setSearchType] = useState&lt;"regex" | "id" | null&gt;(null);
   const [inType, setInType] = useState(false);
   const [content, setContent] = useState&lt;string | null&gt;(null);
-    const [name, setName] = useState&lt;string | null&gt;(null);
-&nbsp;
+  const [name, setName] = useState&lt;string | null&gt;(null);
 &nbsp;
   const handleGetPackageById = async () =&gt; {
     if (!packageId) {
@@ -461,7 +477,9 @@ const GetPackage: React.FC = () =&gt; {
   };
 &nbsp;
   return (
-    &lt;div className="min-h-screen text-white bg-gray-900 py-7 px-60 flex flex-col items-center"&gt;
+    &lt;div
+      className="min-h-screen text-white bg-gray-900 py-7 px-60 flex flex-col items-center"
+      aria-label={ariaLabel}&gt;
       &lt;div className="flex flex-col gap-5"&gt;
         {!inType &amp;&amp; (
           &lt;div className="flex gap-10 justify-center"&gt;
@@ -545,16 +563,19 @@ const GetPackage: React.FC = () =&gt; {
         )}
         {loading &amp;&amp; &lt;p className="text-gray-700 italic"&gt;Loading...&lt;/p&gt;}
         {error &amp;&amp; &lt;p className="text-red-500 italic"&gt;{error}&lt;/p&gt;}
-        {result &amp;&amp; !content &amp;&amp;&lt;code className=""&gt;&lt;pre className="mx-auto text-white p-4 mt-4 rounded max-w-96 break-words whitespace-normal"&gt;{result}&lt;/pre&gt;&lt;/code&gt;}
+        {result &amp;&amp; !content &amp;&amp; (
+          &lt;code className=""&gt;
+            &lt;pre className="mx-auto text-white p-4 mt-4 rounded max-w-96 break-words whitespace-normal"&gt;{result}&lt;/pre&gt;
+          &lt;/code&gt;
+        )}
         {<span class="branch-0 cbranch-no" title="branch not covered" >content &amp;&amp; (</span>
-<span class="cstat-no" title="statement not covered" >                &lt;a</span>
-<span class="cstat-no" title="statement not covered" >                    href={downloadFile(content, `${name?.replace(" ", "_")}.zip`).url}</span>
-<span class="cstat-no" title="statement not covered" >                    download={`${name?.replace(" ", "_")}.zip`}</span>
-<span class="cstat-no" title="statement not covered" >                    className="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg"</span>
-<span class="cstat-no" title="statement not covered" >                &gt;</span>
-                    Click here to download
-<span class="cstat-no" title="statement not covered" >                &lt;/a&gt;</span>
-            )}
+<span class="cstat-no" title="statement not covered" >          &lt;a</span>
+<span class="cstat-no" title="statement not covered" >            href={downloadFile(content, `${name?.replace(" ", "_")}.zip`).url}</span>
+<span class="cstat-no" title="statement not covered" >            download={`${name?.replace(" ", "_")}.zip`}</span>
+<span class="cstat-no" title="statement not covered" >            className="mt-4 px-6 py-3 bg-green-500 text-white rounded-lg"&gt;</span>
+            Click here to download
+<span class="cstat-no" title="statement not covered" >          &lt;/a&gt;</span>
+        )}
       &lt;/div&gt;
     &lt;/div&gt;
   );
@@ -568,7 +589,7 @@ export default GetPackage;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-06T03:21:03.787Z
+                at 2024-12-08T07:42:20.829Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
