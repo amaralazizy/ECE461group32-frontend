@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach, vi, Mock } from "vitest";
 import Tracks from "../../src/components/Tracks"; // Adjust the path if necessary
 import "@testing-library/jest-dom/vitest";
 import { getTracks } from "../../src/api"; // Mock the API call
@@ -25,7 +25,7 @@ describe("Tracks Component Suite", () => {
     const mockTracks = {
       plannedTracks: ["Track 1", "Track 2", "Track 3"]
     };
-    getTracks.mockResolvedValueOnce(mockTracks);
+    (getTracks as Mock).mockResolvedValueOnce(mockTracks);
 
     const { unmount } = render(<Tracks />);
 
@@ -43,7 +43,7 @@ describe("Tracks Component Suite", () => {
   });
 
   it("displays an error message when getTracks API fails", async () => {
-    getTracks.mockRejectedValueOnce(new Error("Failed to fetch tracks"));
+    (getTracks as Mock).mockRejectedValueOnce(new Error("Failed to fetch tracks"));
 
     const { unmount } = render(<Tracks />);
 
@@ -59,7 +59,7 @@ describe("Tracks Component Suite", () => {
   });
 
   it("displays a 'No tracks found' message when no tracks are available", async () => {
-    getTracks.mockResolvedValueOnce(null);
+    (getTracks as Mock).mockResolvedValueOnce(null);
 
     const { unmount } = render(<Tracks />);
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, cleanup, waitFor } from "@testing-library/react";
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach, vi, Mock } from "vitest";
 import DeleteGroup from "../../src/components/DeleteGroup";
 import "@testing-library/jest-dom/vitest";
 import * as api from "../../src/api";
@@ -16,29 +16,8 @@ afterEach(() => {
 });
 
 describe("DeleteGroup Component Suite", () => {
-//   it("renders groups and delete buttons", async () => {
-//     api.getGroupsAndPermissions.mockResolvedValueOnce({
-//       groups: [
-//         { id: 1, name: "Group 1" },
-//         { id: 2, name: "Group 2" },
-//       ],
-//     });
-//     const { unmount } = render(<DeleteGroup />);
-    
-//     // Wait for groups to load and check if they're rendered
-//     await screen.findByText("Group 1");
-//     await screen.findByText("Group 2");
-    
-//     expect(screen.getByText("Group 1")).toBeInTheDocument();
-//     expect(screen.getByText("Group 2")).toBeInTheDocument();
-//     expect(screen.getByRole("button", { name: /delete/i })).toBeInTheDocument();
-
-//     unmount();
-//   });
     it("renders a delete button for every group", () => {
-        
-        // Mock the groups response if needed
-        api.getGroupsAndPermissions.mockResolvedValueOnce({
+        (api.getGroupsAndPermissions as Mock).mockResolvedValueOnce({
             groups: [
                 { id: 1, name: "Group 1" },
                 { id: 2, name: "Group 2" },
@@ -46,7 +25,7 @@ describe("DeleteGroup Component Suite", () => {
             ]
         });
         
-        const { unmount } = render(<DeleteGroup />);
+        const { unmount } = render(<DeleteGroup ariaLabel="testLabel" />);
         
         // Wait for groups to be displayed
         waitFor(() => {
@@ -60,15 +39,15 @@ describe("DeleteGroup Component Suite", () => {
 });
 
 it("calls deleteGroup and removes the group from the list", async () => {
-  api.getGroupsAndPermissions.mockResolvedValueOnce({
+  (api.getGroupsAndPermissions as Mock).mockResolvedValueOnce({
     groups: [
       { id: 1, name: "Group 1" },
       { id: 2, name: "Group 2" },
     ],
   });
-  api.deleteGroup.mockResolvedValueOnce({});
+  (api.deleteGroup as Mock).mockResolvedValueOnce({});
 
-  const { unmount, container } = render(<DeleteGroup />);
+  const { unmount, container } = render(<DeleteGroup ariaLabel="testLabel"/>);
 
   // Wait for the groups to be rendered
   await waitFor(() => expect(screen.getByText("Group 1")).toBeInTheDocument());
@@ -97,8 +76,8 @@ it("calls deleteGroup and removes the group from the list", async () => {
 
 
   it("displays 'No groups found' when there are no groups", async () => {
-    api.getGroupsAndPermissions.mockResolvedValueOnce({ groups: [] });
-    const { unmount } = render(<DeleteGroup />);
+    (api.getGroupsAndPermissions as Mock).mockResolvedValueOnce({ groups: [] });
+    const { unmount } = render(<DeleteGroup ariaLabel="testLabel"/>);
     
     await screen.findByText("No groups found");
     

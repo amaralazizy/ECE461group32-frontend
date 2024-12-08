@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest'; 
-import { describe, it, expect, afterEach, vi } from 'vitest';
+import { describe, it, expect, afterEach, vi, Mock } from 'vitest';
 import Cost from '../../src/components/Cost';
 import * as api from '../../src/api';
 
@@ -16,7 +16,7 @@ describe('Cost Component Suite', () => {
   });
 
   it('renders the Cost component', () => {
-    render(<Cost />);
+    render(<Cost ariaLabel="testLabel" />);
 
     expect(screen.getByLabelText(/get package cost by id/i)).toBeInTheDocument();
     expect(screen.getByPlaceholderText(/enter package id/i)).toBeInTheDocument();
@@ -24,7 +24,7 @@ describe('Cost Component Suite', () => {
   });
 
   it('allows user to input package ID', () => {
-    render(<Cost />);
+    render(<Cost ariaLabel="testLabel" />);
 
     const packageIdInput = screen.getByPlaceholderText(/enter package id/i);
     fireEvent.change(packageIdInput, { target: { value: 'TestPackageId' } });
@@ -33,7 +33,7 @@ describe('Cost Component Suite', () => {
   });
 
   it('shows error message if package ID is empty when clicking Get Package Cost button', () => {
-    render(<Cost />);
+    render(<Cost ariaLabel="testLabel" />);
 
     const button = screen.getByRole('button', { name: /get package cost/i });
     fireEvent.click(button);
@@ -60,9 +60,9 @@ describe('Cost Component Suite', () => {
   // });
 
   it('shows error message if getPackageCost API fails', async () => {
-    (api.getPackageCost as vi.Mock).mockRejectedValueOnce(new Error('Failed to get package cost'));
+    (api.getPackageCost as Mock).mockRejectedValueOnce(new Error('Failed to get package cost'));
 
-    render(<Cost />);
+    render(<Cost ariaLabel="testLabel" />);
 
     const packageIdInput = screen.getByPlaceholderText(/enter package id/i);
     const button = screen.getByRole('button', { name: /get package cost/i });
@@ -75,19 +75,4 @@ describe('Cost Component Suite', () => {
       expect(screen.getByText(/an error occurred. please try again later/i)).toBeInTheDocument();
     });
   });
-
-  // it('triggers get cost on Enter key press', async () => {
-  //   (api.getPackageCost as vi.Mock).mockResolvedValueOnce({ status: 200, data: { "1": { totalCost: 100 } } });
-
-  //   render(<Cost />);
-
-  //   const packageIdInput = screen.getByPlaceholderText(/enter package id/i);
-  //   fireEvent.change(packageIdInput, { target: { value: '1' } });
-  //   fireEvent.keyPress(packageIdInput, { key: 'Enter', code: 'Enter', charCode: 13 });
-
-  //   await waitFor(() => {
-  //     expect(api.getPackageCost).toHaveBeenCalledWith('1');
-  //     expect(screen.getByText(/package cost: \$100/i)).toBeInTheDocument();
-  //   });
-  // });
 });

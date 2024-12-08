@@ -1,10 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent, cleanup, waitFor } from "@testing-library/react";
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach, vi, Mock } from "vitest";
 import AddUser from "../../src/components/AddUser";
 import "@testing-library/jest-dom/vitest";
 import * as api from "../../src/api";
-// import userEvent from "@testing-library/user-event";
 
 vi.mock("../../src/api", () => ({
   registerUser: vi.fn(),
@@ -18,13 +17,13 @@ afterEach(() => {
 
 describe("AddUser Component Suite", () => {
   it("renders the AddUser component", () => {
-    const { unmount } = render(<AddUser />);
+    const { unmount } = render(<AddUser ariaLabel="testLabel" />);
     expect(screen.getByText(/sign up/i)).toBeInTheDocument();
     unmount();
   });
 
   it("allows user to input username, password, and confirm password", () => {
-    const { unmount } = render(<AddUser />);
+    const { unmount } = render(<AddUser ariaLabel="testLabel" />);
     
     // Username input
     const usernameInput = screen.getByLabelText(/username/i);
@@ -45,7 +44,7 @@ describe("AddUser Component Suite", () => {
   });
 
     it("shows error message if passwords do not match", async () => {
-        const { unmount } = render(<AddUser />);
+        const { unmount } = render(<AddUser ariaLabel="testLabel" />);
         const usernameInput = screen.getByLabelText(/username/i);
         const passwordInput = screen.getByLabelText(/^password$/i);
         const confirmPasswordInput = screen.getByLabelText(/confirm password/i);
@@ -65,8 +64,8 @@ describe("AddUser Component Suite", () => {
 
 
   it("renders the loading spinner while submitting", async () => {
-    api.registerUser.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 1000)));
-    const { unmount } = render(<AddUser />);
+    (api.registerUser as Mock).mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 1000)));
+    const { unmount } = render(<AddUser ariaLabel="testLabel" />);
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/^password$/i);
     const confirmPasswordInput = screen.getByLabelText(/confirm password/i);
@@ -93,7 +92,7 @@ describe("AddUser Component Suite", () => {
   });
 
   it("renders permissions when Grant Permission button is clicked", () => {
-    const { unmount } = render(<AddUser />);
+    const { unmount } = render(<AddUser ariaLabel="testLabel" />);
     const grantPermissionsButton = screen.getByRole("button", { name: /grant permission/i });
 
     fireEvent.click(grantPermissionsButton);
@@ -102,8 +101,8 @@ describe("AddUser Component Suite", () => {
   });
 
   it("renders group selection when Assign to Group button is clicked", async () => {
-    api.getGroupsAndPermissions.mockResolvedValueOnce(["Group1", "Group2"]);
-    const { unmount } = render(<AddUser />);
+    (api.getGroupsAndPermissions as Mock).mockResolvedValueOnce(["Group1", "Group2"]);
+    const { unmount } = render(<AddUser ariaLabel="testLabel" />);
     const assignToGroupButton = screen.getByRole("button", { name: /assign to group/i });
 
     fireEvent.click(assignToGroupButton);
@@ -116,8 +115,8 @@ describe("AddUser Component Suite", () => {
   });
 
   it("calls registerUser API when form is submitted successfully", async () => {
-    api.registerUser.mockResolvedValueOnce(true);
-    const { unmount } = render(<AddUser />);
+    (api.registerUser as Mock).mockResolvedValueOnce(true);
+    const { unmount } = render(<AddUser ariaLabel="testLabel" />);
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/^password$/i);
     const confirmPasswordInput = screen.getByLabelText(/confirm password/i);
@@ -139,8 +138,8 @@ describe("AddUser Component Suite", () => {
   });
 
   it("shows success message on successful submission", async () => {
-    api.registerUser.mockResolvedValueOnce(true);
-    const { unmount } = render(<AddUser />);
+    (api.registerUser as Mock).mockResolvedValueOnce(true);
+    const { unmount } = render(<AddUser ariaLabel="testLabel" />);
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/^password$/i);
     const confirmPasswordInput = screen.getByLabelText(/confirm password/i);
@@ -161,8 +160,8 @@ describe("AddUser Component Suite", () => {
   });
 
   it("shows error message on failed submission", async () => {
-    api.registerUser.mockRejectedValueOnce(new Error("Failed to add user"));
-    const { unmount } = render(<AddUser />);
+    (api.registerUser as Mock).mockRejectedValueOnce(new Error("Failed to add user"));
+    const { unmount } = render(<AddUser ariaLabel="testLabel" />);
     const usernameInput = screen.getByLabelText(/username/i);
     const passwordInput = screen.getByLabelText(/^password$/i);
     const confirmPasswordInput = screen.getByLabelText(/confirm password/i);

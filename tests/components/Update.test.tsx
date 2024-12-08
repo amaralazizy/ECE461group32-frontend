@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach, vi, Mock } from "vitest";
 import Update from "../../src/components/Update"; // Adjust the path if necessary
 import "@testing-library/jest-dom/vitest";
 import { updatePackageById } from "../../src/api"; // Mock the API call
@@ -16,13 +16,13 @@ describe("Update Component Suite", () => {
   });
 
   it("renders the Update Package component", () => {
-    const { unmount } = render(<Update />);
+    const { unmount } = render(<Update ariaLabel="testLabel" />);
     expect(screen.getByText(/update package by id/i)).toBeInTheDocument();
     unmount();
   });
 
   it("allows user to input package ID and update data", () => {
-    const { unmount } = render(<Update />);
+    const { unmount } = render(<Update ariaLabel="testLabel" />);
 
     // Package ID input
     const packageIdInput = screen.getByLabelText(/update package by id/i);
@@ -38,7 +38,7 @@ describe("Update Component Suite", () => {
   });
 
   it("shows error message if package ID or update data is missing", async () => {
-    const { unmount } = render(<Update />);
+    const { unmount } = render(<Update ariaLabel="testLabel" />);
     const updateButton = screen.getByRole("button", { name: /update package/i });
 
     // Click update button without entering package ID and update data
@@ -52,9 +52,9 @@ describe("Update Component Suite", () => {
   });
 
   it("calls updatePackageById API and shows success message on successful update", async () => {
-    updatePackageById.mockResolvedValueOnce({ status: 200 });
+    (updatePackageById as Mock).mockResolvedValueOnce({ status: 200 });
 
-    const { unmount } = render(<Update />);
+    const { unmount } = render(<Update ariaLabel="testLabel" />);
     const packageIdInput = screen.getByLabelText(/update package by id/i);
     const updateDataInput = screen.getByPlaceholderText(/enter update data/i);
     const updateButton = screen.getByRole("button", { name: /update package/i });
@@ -73,9 +73,9 @@ describe("Update Component Suite", () => {
   });
 
   it("shows error message when updatePackageById API fails", async () => {
-    updatePackageById.mockRejectedValueOnce(new Error("Failed to update package"));
+    (updatePackageById as Mock).mockRejectedValueOnce(new Error("Failed to update package"));
 
-    const { unmount } = render(<Update />);
+    const { unmount } = render(<Update ariaLabel="testLabel" />);
     const packageIdInput = screen.getByLabelText(/update package by id/i);
     const updateDataInput = screen.getByPlaceholderText(/enter update data/i);
     const updateButton = screen.getByRole("button", { name: /update package/i });

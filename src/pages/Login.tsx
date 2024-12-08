@@ -21,24 +21,19 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
 
     try {
       setLoading(true);
-      // Use the authenticateUser API function to log in the user
-      // const data = await authenticateUser(username, password, false); // Assuming false for `isAdministrator`
-      const data = await authenticateUser(username, password, false); // Assuming false for `isAdministrator`
-      // console.log(data);
-      // console.log(data.token);
+      const data = await authenticateUser(username, password, false);
       if (data) {
-        // console.log(data);
-        localStorage.setItem("authToken", data); // Save the token for authenticated requests
-        onLoginSuccess(); // Update parent state to reflect login status
-        navigate("/"); // Redirect to the home page
+        localStorage.setItem("authToken", data);
+        onLoginSuccess();
+        navigate("/");
       } else {
         setError("Login failed. Please check your credentials and try again.");
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
-        setError(err.message); // Safely access the error message if it’s an instance of Error
+        setError(err.message);
       } else {
-        setError("An unexpected error occurred"); // Fallback message if err is not of type Error
+        setError("An unexpected error occurred");
       }
     } finally {
       setLoading(false);
@@ -46,7 +41,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   };
 
   if (loading) {
-    return <Loading />; // Show the spinner while loading is true
+    return <Loading />;
   }
 
   return (

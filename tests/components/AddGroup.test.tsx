@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, cleanup, waitFor } from "@testing-library/react";
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach, vi, Mock } from "vitest";
 import AddGroup from "../../src/components/AddGroup";
 import "@testing-library/jest-dom/vitest";
 import { addGroup } from "../../src/api";
@@ -16,14 +16,14 @@ afterEach(() => {
 
 describe("AddGroup Component Suite", () => {
   it("renders the AddGroup component", () => {
-    const { unmount } = render(<AddGroup />);
+    const { unmount } = render(<AddGroup ariaLabel="testLabel" />);
     expect(screen.getByText(/add a group/i)).toBeInTheDocument();
     expect(screen.getByTestId("add-group-form")).toBeInTheDocument();
     unmount();
   });
 
   it("allows user to input group name", () => {
-    const { unmount } = render(<AddGroup />);
+    const { unmount } = render(<AddGroup ariaLabel="testLabel" />);
     const input = screen.getByLabelText(/group name/i);
     fireEvent.change(input, { target: { value: "Test Group" } });
     expect(input).toHaveValue("Test Group");
@@ -31,8 +31,8 @@ describe("AddGroup Component Suite", () => {
   });
 
   it("renders the loading spinner while submitting", async () => {
-  addGroup.mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 1000)));
-  const { unmount } = render(<AddGroup />);
+  (addGroup as Mock).mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 1000)));
+  const { unmount } = render(<AddGroup ariaLabel="testLabel"/>);
   const groupName = screen.getByLabelText(/^group name$/i);
   const button = screen.getByRole("button", { name: /add group/i });
 
@@ -54,7 +54,7 @@ describe("AddGroup Component Suite", () => {
 
 
   it("toggles Admin User checkbox", () => {
-    const { unmount } = render(<AddGroup />);
+    const { unmount } = render(<AddGroup ariaLabel="testLabel" />);
     const adminCheckbox = screen.getByLabelText(/admin user/i);
     expect(adminCheckbox).not.toBeChecked();
 
@@ -64,7 +64,7 @@ describe("AddGroup Component Suite", () => {
   });
 
   it("renders permissions checkboxes when not an administrator", () => {
-    const { unmount } = render(<AddGroup />);
+    const { unmount } = render(<AddGroup ariaLabel="testLabel" />);
     const adminCheckbox = screen.getByLabelText(/admin user/i);
 
     fireEvent.click(adminCheckbox); // Toggle admin on
@@ -77,8 +77,8 @@ describe("AddGroup Component Suite", () => {
   });
 
   it("calls addGroup API when the form is submitted", async () => {
-    addGroup.mockResolvedValueOnce(true);
-    const { unmount } = render(<AddGroup />);
+    (addGroup as Mock).mockResolvedValueOnce(true);
+    const { unmount } = render(<AddGroup ariaLabel="testLabel" />);
     const input = screen.getByLabelText(/group name/i);
     const button = screen.getByRole("button", { name: /add group/i });
 
@@ -94,8 +94,8 @@ describe("AddGroup Component Suite", () => {
   });
 
   it("shows success message on successful submission", async () => {
-    addGroup.mockResolvedValueOnce(true);
-    const { unmount } = render(<AddGroup />);
+    (addGroup as Mock).mockResolvedValueOnce(true);
+    const { unmount } = render(<AddGroup ariaLabel="testLabel" />);
     const input = screen.getByLabelText(/group name/i);
     const button = screen.getByRole("button", { name: /add group/i });
 
@@ -110,8 +110,8 @@ describe("AddGroup Component Suite", () => {
   });
 
   it("shows error message on failed submission", async () => {
-    addGroup.mockRejectedValueOnce(new Error("Failed to add group"));
-    const { unmount } = render(<AddGroup />);
+    (addGroup as Mock).mockRejectedValueOnce(new Error("Failed to add group"));
+    const { unmount } = render(<AddGroup ariaLabel="testLabel" />);
     const input = screen.getByLabelText(/group name/i);
     const button = screen.getByRole("button", { name: /add group/i });
 
@@ -126,7 +126,7 @@ describe("AddGroup Component Suite", () => {
   });
 
   it("handles permissions correctly when checkboxes are clicked", () => {
-    const { unmount } = render(<AddGroup />);
+    const { unmount } = render(<AddGroup ariaLabel="testLabel" />);
     const adminCheckbox = screen.getByLabelText(/admin user/i);
     fireEvent.click(adminCheckbox); // Make sure it is not admin
     fireEvent.click(adminCheckbox); // Toggle off admin to see permissions

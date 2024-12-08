@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach, vi, Mock } from "vitest";
 import GetPackage from "../../src/components/GetPackage"; // Adjust path if needed
 import "@testing-library/jest-dom/vitest";
 import { getPackageById, searchPackagesByRegEx } from "../../src/api"; // Adjust path if needed
@@ -16,7 +16,7 @@ describe("GetPackage", () => {
   });
 
   it("renders buttons to search by ID and regex", () => {
-    const { unmount } = render(<GetPackage />);
+    const { unmount } = render(<GetPackage ariaLabel="testLabel" />);
 
     expect(screen.getByText("Search by ID")).toBeInTheDocument();
     expect(screen.getByText("Search by Regex")).toBeInTheDocument();
@@ -27,9 +27,9 @@ describe("GetPackage", () => {
   it("calls getPackageById when searching by ID", async () => {
     // const mockData = { data: { Content: "packageContent" }, metadata: { Name: "Package 1" } };
     const mockData = [{ id: "1", name: "Package 1" }];
-    getPackageById.mockResolvedValueOnce(mockData);
+    (getPackageById as Mock).mockResolvedValueOnce(mockData);
 
-    const { unmount } = render(<GetPackage />);
+    const { unmount } = render(<GetPackage ariaLabel="testLabel" />);
 
     fireEvent.click(screen.getByRole("button", { name: /search by id/i }));
     fireEvent.change(screen.getByLabelText("Package ID"), { target: { value: "1" } });
@@ -45,9 +45,9 @@ describe("GetPackage", () => {
 
   it("calls searchPackagesByRegEx when searching by regex", async () => {
     const mockData = [{ Version: "1.2.3", Name: "Underscore", ID: "underscore" }];
-    searchPackagesByRegEx.mockResolvedValueOnce(mockData);
+    (searchPackagesByRegEx as Mock).mockResolvedValueOnce(mockData);
 
-    const { unmount } = render(<GetPackage />);
+    const { unmount } = render(<GetPackage ariaLabel="testLabel" />);
 
     //   expect(screen.getByRole("button", { name: /search by regex/i })).toBeInTheDocument();
 
@@ -75,7 +75,7 @@ describe("GetPackage", () => {
   });
 
   it("displays error message if package ID is empty", async () => {
-    const { unmount } = render(<GetPackage />);
+    const { unmount } = render(<GetPackage ariaLabel="testLabel" />);
 
     fireEvent.click(screen.getByText("Search by ID"));
     fireEvent.click(screen.getByText("Search"));
@@ -88,7 +88,7 @@ describe("GetPackage", () => {
   });
 
   it("displays error message if regex is empty", async () => {
-    const { unmount } = render(<GetPackage />);
+    const { unmount } = render(<GetPackage ariaLabel="testLabel" />);
 
     fireEvent.click(screen.getByText("Search by Regex"));
     fireEvent.click(screen.getByText("Search"));
@@ -101,9 +101,9 @@ describe("GetPackage", () => {
   });
 
   it("displays error message when getPackageById fails", async () => {
-    getPackageById.mockRejectedValueOnce(new Error("Failed to get package"));
+    (getPackageById as Mock).mockRejectedValueOnce(new Error("Failed to get package"));
 
-    const { unmount } = render(<GetPackage />);
+    const { unmount } = render(<GetPackage ariaLabel="testLabel" />);
 
     fireEvent.click(screen.getByText("Search by ID"));
     fireEvent.change(screen.getByLabelText("Package ID"), { target: { value: "123" } });
@@ -117,9 +117,9 @@ describe("GetPackage", () => {
   });
 
   it("displays error message when searchPackagesByRegEx fails", async () => {
-    searchPackagesByRegEx.mockRejectedValueOnce(new Error("Failed to search packages by regex"));
+    (searchPackagesByRegEx as Mock).mockRejectedValueOnce(new Error("Failed to search packages by regex"));
 
-    const { unmount } = render(<GetPackage />);
+    const { unmount } = render(<GetPackage ariaLabel="testLabel" />);
 
     fireEvent.click(screen.getByText("Search by Regex"));
     fireEvent.change(screen.getByLabelText("Package Regex"), { target: { value: "testRegex" } });

@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor, cleanup } from "@testing-library/react";
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach, vi, Mock } from "vitest";
 import Rate from "../../src/components/Rate"; // Adjust the path if necessary
 import "@testing-library/jest-dom/vitest";
 import { getPackageRate } from "../../src/api"; // Mock the API call
@@ -16,13 +16,13 @@ describe("Rate Component Suite", () => {
   });
 
   it("renders the Rate component", () => {
-    const { unmount } = render(<Rate />);
+    const { unmount } = render(<Rate ariaLabel="testLabel"/>);
     expect(screen.getByText(/get package rate by id/i)).toBeInTheDocument();
     unmount();
   });
 
   it("displays an error message if the package ID is empty", async () => {
-    const { unmount } = render(<Rate />);
+    const { unmount } = render(<Rate ariaLabel="testLabel" />);
     const button = screen.getByRole("button", { name: /get package rate/i });
 
     fireEvent.click(button);
@@ -36,9 +36,9 @@ describe("Rate Component Suite", () => {
 
   it("calls getPackageRate API with the correct package ID", async () => {
     const mockRate = { rate: 4.5 };
-    getPackageRate.mockResolvedValueOnce(mockRate);
+  (getPackageRate as Mock).mockResolvedValueOnce(mockRate);
 
-    const { unmount } = render(<Rate />);
+    const { unmount } = render(<Rate ariaLabel="testLabel" />);
     const input = screen.getByLabelText(/get package rate by id/i);
     const button = screen.getByRole("button", { name: /get package rate/i });
 
@@ -48,16 +48,16 @@ describe("Rate Component Suite", () => {
     await waitFor(() => {
       expect(getPackageRate).toHaveBeenCalledWith("123");
       expect(screen.getByText(/package rate retrieved successfully/i)).toBeInTheDocument();
-      expect(screen.getByText(/package rate: 4.5/i)).toBeInTheDocument();
+      expect(screen.getByText(/{ "rate": 4.5 }/i)).toBeInTheDocument();
     });
 
     unmount();
   });
 
   it("displays error message if the getPackageRate call fails", async () => {
-    getPackageRate.mockRejectedValueOnce(new Error("Failed to get package rate"));
+    (getPackageRate as Mock).mockRejectedValueOnce(new Error("Failed to get package rate"));
 
-    const { unmount } = render(<Rate />);
+    const { unmount } = render(<Rate ariaLabel="testLabel"/>);
     const input = screen.getByLabelText(/get package rate by id/i);
     const button = screen.getByRole("button", { name: /get package rate/i });
 
@@ -73,9 +73,9 @@ describe("Rate Component Suite", () => {
 
   it("displays the rate successfully when Enter is pressed", async () => {
     const mockRate = { rate: 3.8 };
-    getPackageRate.mockResolvedValueOnce(mockRate);
+    (getPackageRate as Mock).mockResolvedValueOnce(mockRate);
 
-    const { unmount } = render(<Rate />);
+    const { unmount } = render(<Rate ariaLabel="testLabel"/>);
     const input = screen.getByLabelText(/get package rate by id/i);
 
     fireEvent.change(input, { target: { value: "456" } });
@@ -83,7 +83,7 @@ describe("Rate Component Suite", () => {
 
     await waitFor(() => {
       expect(getPackageRate).toHaveBeenCalledWith("456");
-      expect(screen.getByText(/package rate: 3.8/i)).toBeInTheDocument();
+      expect(screen.getByText(/{ "rate": 3.8 }/i)).toBeInTheDocument();
     });
 
     unmount();
