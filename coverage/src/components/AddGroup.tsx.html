@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.67% </span>
+                <span class="strong">97.72% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>84/86</span>
+                <span class='fraction'>86/88</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">97.67% </span>
+                <span class="strong">97.72% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>84/86</span>
+                <span class='fraction'>86/88</span>
             </div>
         
             
@@ -171,30 +171,21 @@
 <a name='L106'></a><a href='#L106'>106</a>
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a>
-<a name='L113'></a><a href='#L113'>113</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L109'></a><a href='#L109'>109</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">29x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">29x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -205,14 +196,12 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">29x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -229,6 +218,9 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
+<span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-yes">25x</span>
 <span class="cline-any cline-yes">25x</span>
@@ -288,25 +280,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-import { addGroup } from "../api"; // Adjust path as needed
+import { addGroup } from "../api"; 
 import Loading from "./ui/loading";
 &nbsp;
-const AddGroup: React.FC = () =&gt; {
+interface AddGroupProps {
+  ariaLabel: string;
+}
+&nbsp;
+const AddGroup: ({ ariaLabel }: AddGroupProps) =&gt; JSX.Element = ({ ariaLabel }: AddGroupProps) =&gt; {
   const [group, setGroup] = useState&lt;string&gt;("");
-//   const [groups, setGroups] = useState&lt;string[]&gt;([]);
   const [isAdministrator, setIsAdministrator] = useState(false);
-//   const [assignToGroup, setAssignToGroup] = useState(false);
-//   const [grantPermissions, setGrantPermissions] = useState(false);
-  
+&nbsp;
   const [permissions, setPermissions] = useState&lt;string[]&gt;([]);
   const [feedbackMessage, setFeedbackMessage] = useState&lt;[string, boolean]&gt;(["", false]);
   const [loading, setLoading] = useState(false);
-&nbsp;
-//   const handleGroups = async () =&gt; {
-//     const groups = await getGroups();
-//     setGroups(groups);
-//   };
 &nbsp;
   const handlePermissions = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
     const { name, checked } = e.target;
@@ -317,34 +304,35 @@ const AddGroup: React.FC = () =&gt; {
     }
   };
 &nbsp;
-&nbsp;
   const handleAddGroup = async (e: React.FormEvent) =&gt; {
-  e.preventDefault();
+    e.preventDefault();
 &nbsp;
-  try {
-    setLoading(true);
-    const response = await addGroup(group, permissions); // Will throw on error
-    if (response)
-        setFeedbackMessage(["Group added successfully", true]);
-  } catch (err: unknown) {
-    if (err instanceof Error) {
-      setFeedbackMessage([err.message, false]); // Display the error message
-<span class="branch-0 cbranch-no" title="branch not covered" >    } else {</span>
-<span class="cstat-no" title="statement not covered" >      setFeedbackMessage(["An unexpected error occurred", false]); // Fallback for unknown errors</span>
-<span class="cstat-no" title="statement not covered" >    }</span>
-  } finally {
-    setLoading(false);
-  }
-};
+    try {
+      setLoading(true);
+      const response = await addGroup(group, permissions); // Will throw on error
+      if (response) setFeedbackMessage(["Group added successfully", true]);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setFeedbackMessage([err.message, false]); // Display the error message
+<span class="branch-0 cbranch-no" title="branch not covered" >      } else {</span>
+<span class="cstat-no" title="statement not covered" >        setFeedbackMessage(["An unexpected error occurred", false]); // Fallback for unknown errors</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+    } finally {
+      setLoading(false);
+    }
+  };
 &nbsp;
   if (loading) {
     return &lt;Loading /&gt;; // Show the spinner while loading is true
   }
 &nbsp;
   return (
-    &lt;div className="min-h-screen bg-gray-900 py-7 px-60 flex flex-col items-center text-3xl"&gt;
+    &lt;div className="min-h-screen bg-gray-900 py-7 px-60 flex flex-col items-center text-3xl" aria-label={ariaLabel}&gt;
       &lt;h2 className="text-3xl font-bold text-white mb-6"&gt;Add a Group&lt;/h2&gt;
-      &lt;form data-testid="add-group-form" onSubmit={handleAddGroup} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"&gt;
+      &lt;form
+        data-testid="add-group-form"
+        onSubmit={handleAddGroup}
+        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"&gt;
         &lt;div className="mb-4"&gt;
           &lt;label className="block text-gray-700 font-bold mb-2" htmlFor="username"&gt;
             Group Name
@@ -359,33 +347,33 @@ const AddGroup: React.FC = () =&gt; {
           /&gt;
         &lt;/div&gt;
         &lt;div className="mb-4"&gt;
-            &lt;label className="block text-gray-700 font-bold mb-2"&gt;
-              &lt;input
-                className="scale-[2] mr-4"
-                type="checkbox"
-                checked={isAdministrator}
-                onChange={(e) =&gt; setIsAdministrator(e.target.checked)}
-              /&gt;
-              Admin User
-            &lt;/label&gt;
-            {!isAdministrator &amp;&amp; (
-              &lt;div&gt;
-                &lt;label className="block text-gray-700 font-bold mb-2"&gt;
-                  &lt;input className="scale-[2] mr-4" type="checkbox" onChange={handlePermissions} /&gt;
-                  Upload
-                &lt;/label&gt;
-                &lt;label className="block text-gray-700 font-bold mb-2"&gt;
-                  &lt;input className="scale-[2] mr-4" type="checkbox" onChange={handlePermissions} /&gt;
-                  Download
-                &lt;/label&gt;
-                &lt;label className="block text-gray-700 font-bold mb-2"&gt;
-                  &lt;input className="scale-[2] mr-4" type="checkbox" onChange={handlePermissions} /&gt;
-                  Search
-                &lt;/label&gt;
-              &lt;/div&gt;
-            )}
-          &lt;/div&gt;
-        &lt;p className={`${feedbackMessage[1]? "text-green-500" : "text-red-500"}  italic mb-4`}&gt;{feedbackMessage[0]}&lt;/p&gt;
+          &lt;label className="block text-gray-700 font-bold mb-2"&gt;
+            &lt;input
+              className="scale-[2] mr-4"
+              type="checkbox"
+              checked={isAdministrator}
+              onChange={(e) =&gt; setIsAdministrator(e.target.checked)}
+            /&gt;
+            Admin User
+          &lt;/label&gt;
+          {!isAdministrator &amp;&amp; (
+            &lt;div&gt;
+              &lt;label className="block text-gray-700 font-bold mb-2"&gt;
+                &lt;input className="scale-[2] mr-4" type="checkbox" onChange={handlePermissions} /&gt;
+                Upload
+              &lt;/label&gt;
+              &lt;label className="block text-gray-700 font-bold mb-2"&gt;
+                &lt;input className="scale-[2] mr-4" type="checkbox" onChange={handlePermissions} /&gt;
+                Download
+              &lt;/label&gt;
+              &lt;label className="block text-gray-700 font-bold mb-2"&gt;
+                &lt;input className="scale-[2] mr-4" type="checkbox" onChange={handlePermissions} /&gt;
+                Search
+              &lt;/label&gt;
+            &lt;/div&gt;
+          )}
+        &lt;/div&gt;
+        &lt;p className={`${feedbackMessage[1] ? "text-green-500" : "text-red-500"}  italic mb-4`}&gt;{feedbackMessage[0]}&lt;/p&gt;
         &lt;div className="flex items-center justify-between"&gt;
           &lt;button
             type="submit"
@@ -406,7 +394,7 @@ export default AddGroup;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-06T03:21:03.787Z
+                at 2024-12-08T07:42:20.829Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

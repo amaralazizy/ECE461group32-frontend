@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/79</span>
+                <span class='fraction'>0/93</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/79</span>
+                <span class='fraction'>0/93</span>
             </div>
         
             
@@ -142,7 +142,35 @@
 <a name='L77'></a><a href='#L77'>77</a>
 <a name='L78'></a><a href='#L78'>78</a>
 <a name='L79'></a><a href='#L79'>79</a>
-<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -243,11 +271,11 @@
 <span class="cstat-no" title="statement not covered" >    "Update a package",</span>
 <span class="cstat-no" title="statement not covered" >    "Package rate",</span>
 <span class="cstat-no" title="statement not covered" >    "Package cost",</span>
-<span class="cstat-no" title="statement not covered" >    "Reset the rigestiry",</span>
+<span class="cstat-no" title="statement not covered" >    "Reset the registry",</span>
 <span class="cstat-no" title="statement not covered" >    "Get a package",</span>
 <span class="cstat-no" title="statement not covered" >    "Add a user",</span>
 <span class="cstat-no" title="statement not covered" >    "Add a group",</span>
-<span class="cstat-no" title="statement not covered" >    "Delete a group",</span>
+<span class="cstat-no" title="statement not covered" >    "Delete a group"</span>
 <span class="cstat-no" title="statement not covered" >  ];</span>
 <span class="cstat-no" title="statement not covered" >  const [activeTab, setActiveTab] = useState(tabs[0].toLowerCase()); // Use the first tab as default</span>
 <span class="cstat-no" title="statement not covered" ></span>
@@ -265,33 +293,47 @@
 <span class="cstat-no" title="statement not covered" >            }}&gt;</span>
 <span class="cstat-no" title="statement not covered" >            Logout</span>
 <span class="cstat-no" title="statement not covered" >          &lt;/button&gt;</span>
-<span class="cstat-no" title="statement not covered" >          &lt;div className="flex flex-wrap items-center justify-center gap-10 rounded"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div</span>
+<span class="cstat-no" title="statement not covered" >            className="flex flex-wrap items-center justify-center gap-10 rounded"</span>
+<span class="cstat-no" title="statement not covered" >            role="tablist"</span>
+<span class="cstat-no" title="statement not covered" >            aria-label="Action tabs"&gt;</span>
 <span class="cstat-no" title="statement not covered" >            {tabs.map((tab) =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >              &lt;div</span>
+<span class="cstat-no" title="statement not covered" >              &lt;button</span>
 <span class="cstat-no" title="statement not covered" >                role="tab"</span>
 <span class="cstat-no" title="statement not covered" >                key={tab}</span>
-<span class="cstat-no" title="statement not covered" >                className={`bg-white h-fit px-2 py-1 rounded cursor-pointer whitespace-nowrap ${tab.toLowerCase() === activeTab ? "bg-opacity-100" : "bg-opacity-50"}`}</span>
-<span class="cstat-no" title="statement not covered" >                onClick={() =&gt; setActiveTab(tab.toLowerCase())}&gt;</span>
+<span class="cstat-no" title="statement not covered" >                id={tab.toLowerCase().replace(/\s+/g, "-")}</span>
+<span class="cstat-no" title="statement not covered" >                aria-selected={tab.toLowerCase() === activeTab}</span>
+<span class="cstat-no" title="statement not covered" >                className={`bg-white h-fit px-2 py-1 rounded cursor-pointer whitespace-nowrap ${</span>
+<span class="cstat-no" title="statement not covered" >                  tab.toLowerCase() === activeTab ? "bg-opacity-100" : "bg-opacity-50"</span>
+<span class="cstat-no" title="statement not covered" >                }`}</span>
+<span class="cstat-no" title="statement not covered" >                onClick={() =&gt; setActiveTab(tab.toLowerCase())}</span>
+<span class="cstat-no" title="statement not covered" >                aria-controls={`${tab.toLowerCase().replace(/\s+/g, "-")}-panel`}&gt;</span>
 <span class="cstat-no" title="statement not covered" >                {tab}</span>
-<span class="cstat-no" title="statement not covered" >              &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;/button&gt;</span>
 <span class="cstat-no" title="statement not covered" >            ))}</span>
 <span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >          &lt;div className="mt-10 mx-auto"&gt;</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "upload a package" &amp;&amp; &lt;Upload /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "get packages by query" &amp;&amp; &lt;GetPackages /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "reset the rigestiry" &amp;&amp; &lt;Reset /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "update a package" &amp;&amp; &lt;Update /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "package rate" &amp;&amp; &lt;Rate /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "package cost" &amp;&amp; &lt;Cost /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "get a package" &amp;&amp; &lt;GetPackage /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "add a user" &amp;&amp; &lt;AddUser /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "add a group" &amp;&amp; &lt;AddGroup /&gt;}</span>
-<span class="cstat-no" title="statement not covered" >            {activeTab === "delete a group" &amp;&amp; &lt;DeleteGroup /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div</span>
+<span class="cstat-no" title="statement not covered" >            className="mt-10 mx-auto"</span>
+<span class="cstat-no" title="statement not covered" >            role="tabpanel"</span>
+<span class="cstat-no" title="statement not covered" >            id={`${activeTab.replace(/\s+/g, "-")}-panel`}</span>
+<span class="cstat-no" title="statement not covered" >            aria-labelledby={activeTab.replace(/\s+/g, "-")}&gt;</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "upload a package" &amp;&amp; &lt;Upload ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "get packages by query" &amp;&amp; &lt;GetPackages ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "reset the registry" &amp;&amp; &lt;Reset ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "update a package" &amp;&amp; &lt;Update ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "package rate" &amp;&amp; &lt;Rate ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "package cost" &amp;&amp; &lt;Cost ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "get a package" &amp;&amp; &lt;GetPackage ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "add a user" &amp;&amp; &lt;AddUser ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "add a group" &amp;&amp; &lt;AddGroup ariaLabel={activeTab} /&gt;}</span>
+<span class="cstat-no" title="statement not covered" >            {activeTab === "delete a group" &amp;&amp; &lt;DeleteGroup ariaLabel={activeTab} /&gt;}</span>
 <span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >      ) : (</span>
 <span class="cstat-no" title="statement not covered" >        &lt;main className="flex flex-col items-center"&gt;</span>
-<span class="cstat-no" title="statement not covered" >          &lt;button className="bg-blue-500 text-white p-3 rounded mr-4" onClick={() =&gt; navigate("/login")} &gt;Login&lt;/button&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;button className="bg-blue-500 text-white p-3 rounded mr-4" onClick={() =&gt; navigate("/login")}&gt;</span>
+<span class="cstat-no" title="statement not covered" >            Login</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/button&gt;</span>
 <span class="cstat-no" title="statement not covered" >          &lt;Tracks /&gt;</span>
 <span class="cstat-no" title="statement not covered" >        &lt;/main&gt;</span>
 <span class="cstat-no" title="statement not covered" >      )}</span>
@@ -307,7 +349,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-06T03:21:03.787Z
+                at 2024-12-08T07:42:20.829Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

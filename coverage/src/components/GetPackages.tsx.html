@@ -25,14 +25,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>47/47</span>
+                <span class='fraction'>52/52</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">90.9% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/10</span>
+                <span class='fraction'>10/11</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>47/47</span>
+                <span class='fraction'>52/52</span>
             </div>
         
             
@@ -129,19 +129,7 @@
 <a name='L64'></a><a href='#L64'>64</a>
 <a name='L65'></a><a href='#L65'>65</a>
 <a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L67'></a><a href='#L67'>67</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,12 +137,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -173,13 +164,7 @@
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
@@ -193,6 +178,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -200,69 +198,68 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from "react";
 import { getPackages } from "../api";
 &nbsp;
+interface GetPackagesProps {
+  ariaLabel: string;
+}
 &nbsp;
-export default function GetPackages(): JSX.Element {
-    // const [packageId, setPackageId] = useState("");
-    const [query, setQuery] = useState&lt;string&gt;("*");
-    const [numOfPages, setnumOfPages] = useState&lt;number&gt;(1);
-    const [responseMessage, setResponseMessage] = useState&lt;string | null&gt;(null);
+export default function GetPackages({ariaLabel}: GetPackagesProps): JSX.Element {
+  const [query, setQuery] = useState&lt;string&gt;("");
+  const [numOfPages, setnumOfPages] = useState&lt;number&gt;(1);
+  const [responseMessage, setResponseMessage] = useState&lt;[string, "success" | "error"] | null&gt;(null);
 &nbsp;
-    // const handleIdChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-    //     setPackageId(e.target.value);
-    //     setResponseMessage(""); // Clear response message when user starts typing
-    //     setDownloadLink(""); // Clear download link when user starts typing
-    // };
+  const handleQuery = async () =&gt; {
+    try {
+      const data = await getPackages(JSON.parse(query), numOfPages);
+      if (data) {
+        setResponseMessage([JSON.stringify(data, null, 2), "success"]);
+      } else {
+        setResponseMessage(["No packages found", "error"]);
+      }
+    } catch (error) {
+      setResponseMessage(["An error occurred while fetching packages", "error"]);
+      console.error(error);
+    }
+  };
 &nbsp;
-    
-    
-    const handleQuery = async () =&gt; {
+  const handleKeyPress = (e: React.KeyboardEvent&lt;HTMLTextAreaElement&gt;) =&gt; {
+    if (e.key === "Enter") {
+      handleQuery();
+    }
+  };
 &nbsp;
-        try {
-                const data = await getPackages(JSON.parse(query), numOfPages);
-                if (data) {
-                    setResponseMessage(data);
-                    
-                } else {
-                    setResponseMessage("No packages found");
-            }
-        } catch (error) {
-            setResponseMessage("An error occurred while fetching packages");
-            console.error(error);
-        }
-    };
-&nbsp;
-    const handleKeyPress = (e: React.KeyboardEvent&lt;HTMLTextAreaElement&gt;) =&gt; {
-        if (e.key === 'Enter') {
-            handleQuery();
-        }
-    };
-&nbsp;
-    return (
-        &lt;div className="min-w-[700px] flex flex-col items-center gap-10"&gt;
-            &lt;label className="text-3xl text-white" htmlFor="packageQuery"&gt;Get Packages by query&lt;/label&gt;
-            &lt;textarea
-                id="packageQuery"
-                onChange={(e) =&gt; setQuery(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Enter Package Query"
-                className="text-3xl rounded caret-black p-2"
-                rows={6}
-            /&gt;
-            &lt;label className="text-3xl text-white" htmlFor="numOfPages"&gt;Number of Pages&lt;/label&gt;
-            &lt;input
-                id="numOfPages"
-                type="number"
-                onChange={(e) =&gt; setnumOfPages(e.target.valueAsNumber)}
-                placeholder="Enter number of pages"
-                className="text-3xl rounded caret-black p-2"
-            /&gt;
-            &lt;button onClick={handleQuery} className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg"&gt;
-                Query Package
-            &lt;/button&gt;
-            {responseMessage &amp;&amp; &lt;span className="text-red-500 mt-2"&gt;{responseMessage}&lt;/span&gt;}
-            
-        &lt;/div&gt;
-    );
+  return (
+    &lt;div className="min-w-[700px] flex flex-col items-center gap-10" aria-label={ariaLabel}&gt;
+      &lt;label className="text-3xl text-white" htmlFor="packageQuery"&gt;
+        Get Packages by query
+      &lt;/label&gt;
+      &lt;textarea
+        id="packageQuery"
+        onChange={(e) =&gt; setQuery(e.target.value)}
+        onKeyPress={handleKeyPress}
+        placeholder="Enter Package Query"
+        className="text-3xl rounded caret-black p-2"
+        rows={6}
+      /&gt;
+      &lt;label className="text-3xl text-white" htmlFor="numOfPages"&gt;
+        Number of Pages
+      &lt;/label&gt;
+      &lt;input
+        id="numOfPages"
+        type="number"
+        onChange={(e) =&gt; setnumOfPages(e.target.valueAsNumber)}
+        placeholder="Enter number of pages"
+        className="text-3xl rounded caret-black p-2"
+      /&gt;
+      &lt;button onClick={handleQuery} className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg"&gt;
+        Query Package
+      &lt;/button&gt;
+      {responseMessage &amp;&amp; (
+        &lt;span className={`${responseMessage[0] === <span class="branch-0 cbranch-no" title="branch not covered" >"error" ? "text-red-500" : "</span>text-white"} mt-2`}&gt;
+          {responseMessage[0]}
+        &lt;/span&gt;
+      )}
+    &lt;/div&gt;
+  );
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -271,7 +268,7 @@ export default function GetPackages(): JSX.Element {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-06T03:21:03.787Z
+                at 2024-12-08T07:42:20.829Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
