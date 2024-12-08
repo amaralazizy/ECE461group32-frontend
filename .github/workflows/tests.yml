@@ -4,8 +4,6 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "./**"
 
 jobs:
   test:
@@ -20,10 +18,14 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Debug Environment
+        run: |
+          node -v
+          npm -v
+          ls -al
+
       - name: Install Dependencies
         run: npm install
-        working-directory: ./
 
       - name: Run Unit Tests
         run: npm test
-        working-directory: ./
