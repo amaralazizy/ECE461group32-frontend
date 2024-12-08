@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { authenticateUser } from '../api'; // Make sure the path matches your file structure
-import { authenticateUser } from "../api"; // Make sure the path matches your file structure
+import { authenticateUser } from "../api";
 import Loading from "../components/ui/loading";
 
 type LoginProps = {

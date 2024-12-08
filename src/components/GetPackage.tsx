@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { getPackageById, searchPackagesByRegEx } from "../api";
 import {downloadFile} from "../lib/utils";
 

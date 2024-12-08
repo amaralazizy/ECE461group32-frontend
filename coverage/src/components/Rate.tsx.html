@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.22% </span>
+                <span class="strong">96.49% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>51/53</span>
+                <span class='fraction'>55/57</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90.9% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>10/11</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">96.22% </span>
+                <span class="strong">96.49% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>51/53</span>
+                <span class='fraction'>55/57</span>
             </div>
         
             
@@ -127,7 +127,21 @@
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
 <a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
@@ -170,6 +184,8 @@
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
@@ -183,6 +199,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -194,66 +214,76 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { useState } from "react";
 import { getPackageRate } from "../api";
 &nbsp;
-export default function Rate(): JSX.Element {
-    const [packageId, setPackageId] = useState("");
-    const [rate, setRate] = useState&lt;number | null&gt;(null);
-    const [responseMessage, setResponseMessage] = useState("");
+interface RateProps {
+  ariaLabel: string;
+}
 &nbsp;
-    const handleIdChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
-        setPackageId(e.target.value);
-        setResponseMessage(""); // Clear response message when user starts typing
-        setRate(null); // Clear rate when user starts typing
-    };
+export default function Rate({ ariaLabel }: RateProps): JSX.Element {
+  const [packageId, setPackageId] = useState("");
+  const [rate, setRate] = useState&lt;string | null&gt;(null);
+  const [responseMessage, setResponseMessage] = useState&lt;[string, "success" | "error"] | null&gt;("");
 &nbsp;
-    const handleGetRate = async () =&gt; {
-        if (!packageId) {
-            setResponseMessage("Please enter a package ID.");
-            return;
-        }
+  const handleIdChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
+    setPackageId(e.target.value);
+    setResponseMessage(null); // Clear response message when user starts typing
+    setRate(null); // Clear rate when user starts typing
+  };
 &nbsp;
-        try {
-            // Replace with the actual API endpoint to get the package rate
-            const response = await getPackageRate(packageId);
-            if (response) {
-                setRate(response.rate);
-                setResponseMessage("Package rate retrieved successfully.");
-<span class="branch-0 cbranch-no" title="branch not covered" >            } else {</span>
-<span class="cstat-no" title="statement not covered" >                setResponseMessage("Failed to get the package rate. Please try again.");</span>
-<span class="cstat-no" title="statement not covered" >            }</span>
-        } catch {
-            setResponseMessage("An error occurred. Please try again later.");
-        }
-    };
+  const handleGetRate = async () =&gt; {
+    if (!packageId) {
+      setResponseMessage(["Please enter a package ID.", "error"]);
+      return;
+    }
 &nbsp;
-    const handleKeyPress = (e: React.KeyboardEvent&lt;HTMLInputElement&gt;) =&gt; {
-        if (e.key === 'Enter') {
-            handleGetRate();
-        }
-    };
+    try {
+      // Replace with the actual API endpoint to get the package rate
+      const response = await getPackageRate(packageId);
+      if (response) {
+        setRate(JSON.stringify(response, null, 2));
+        setResponseMessage(["Package rate retrieved successfully.", "success"]);
+<span class="branch-0 cbranch-no" title="branch not covered" >      } else {</span>
+<span class="cstat-no" title="statement not covered" >        setResponseMessage(["Failed to get the package rate. Please try again.", "error"]);</span>
+<span class="cstat-no" title="statement not covered" >      }</span>
+    } catch {
+      setResponseMessage(["An error occurred. Please try again later.", "error"]);
+    }
+  };
 &nbsp;
-    return (
-        &lt;div className="min-w-[700px] flex flex-col items-center gap-10"&gt;
-            &lt;label className="text-3xl text-white" htmlFor="packageId"&gt;Get Package Rate by ID&lt;/label&gt;
-            &lt;input
-                id="packageId"
-                type="text"
-                value={packageId}
-                onChange={handleIdChange}
-                onKeyPress={handleKeyPress}
-                placeholder="Enter Package ID"
-                className="text-3xl rounded caret-black p-2"
-            /&gt;
-            &lt;button onClick={handleGetRate} className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg"&gt;
-                Get Package Rate
-            &lt;/button&gt;
-            {responseMessage &amp;&amp; &lt;span className="text-red-500 mt-2"&gt;{responseMessage}&lt;/span&gt;}
-            {rate !== null &amp;&amp; (
-                &lt;div className="mt-4 text-3xl text-white"&gt;
-                    Package Rate: {rate}
-                &lt;/div&gt;
-            )}
+  const handleKeyPress = (e: React.KeyboardEvent&lt;HTMLInputElement&gt;) =&gt; {
+    if (e.key === "Enter") {
+      handleGetRate();
+    }
+  };
+&nbsp;
+  return (
+    &lt;div className="min-w-[700px] flex flex-col items-center gap-10" aria-label={ariaLabel}&gt;
+      &lt;label className="text-3xl text-white" htmlFor="packageId"&gt;
+        Get Package Rate by ID
+      &lt;/label&gt;
+      &lt;input
+        id="packageId"
+        type="text"
+        value={packageId}
+        onChange={handleIdChange}
+        onKeyPress={handleKeyPress}
+        placeholder="Enter Package ID"
+        className="text-3xl rounded caret-black p-2"
+      /&gt;
+      &lt;button onClick={handleGetRate} className="mt-4 px-6 py-3 bg-blue-500 text-white rounded-lg"&gt;
+        Get Package Rate
+      &lt;/button&gt;
+      {responseMessage &amp;&amp; (
+        &lt;span className={`${responseMessage[0] === <span class="branch-0 cbranch-no" title="branch not covered" >"error" ? "text-red-500" : "</span>text-green-500"} mt-2`}&gt;
+          {responseMessage[0]}
+        &lt;/span&gt;
+      )}
+      {rate !== null &amp;&amp; (
+        &lt;div className="mt-4 text-3xl text-white"&gt;
+          Package Rate: &lt;pre&gt;{rate}&lt;/pre&gt;
         &lt;/div&gt;
-    );
+      )}
+    &lt;/div&gt;
+  );
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -262,7 +292,7 @@ export default function Rate(): JSX.Element {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-12-06T03:21:03.787Z
+                at 2024-12-08T07:42:20.829Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
