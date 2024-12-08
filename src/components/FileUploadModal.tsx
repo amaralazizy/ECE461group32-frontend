@@ -175,7 +175,6 @@ import { Input } from "./ui/input";
 import { cn, convertZipToBase64 } from "../lib/utils";
 
 interface FileUploadProps {
-  id: string;
   className?: string;
   onFileUpload: (base64Content: string) => Promise<JSON>;
 }
