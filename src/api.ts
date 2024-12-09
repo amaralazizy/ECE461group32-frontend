@@ -1,12 +1,23 @@
 import axios from "axios";
-
-// const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/prod";
 const API_BASE_URL = "https://zy5br6rkxd.execute-api.us-east-1.amazonaws.com/front";
-if (!localStorage.getItem("authToken")) {
-  localStorage.setItem("authToken", "");
-}
-const authToken = localStorage.getItem("authToken");
-
+export const axiosInstance = axios.create({
+  baseURL: API_BASE_URL
+});
+let isShowingModal = false;
+axiosInstance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 403) {
+      if (!isShowingModal) {
+        isShowingModal = true;
+        alert("Session expired. Redirecting to login...");
+        localStorage.removeItem("authToken");
+        window.location.href = "/login";
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 export const registerUser = async (
   username: string,
   password: string,
@@ -15,9 +26,10 @@ export const registerUser = async (
   groups?: string[]
 ) => {
   try {
+    const authToken = localStorage.getItem("authToken");
     console.log("Registering user...");
-    const response = await axios.post(
-      `${API_BASE_URL}/register`,
+    const response = await axiosInstance.post(
+      `/register`,
       {
         name: username,
         password: password,
@@ -46,12 +58,11 @@ export const registerUser = async (
     console.log(error);
   }
 };
-
 export const authenticateUser = async (username: string, password: string, isAdministrator: boolean) => {
   try {
     console.log("Authenticating user...");
-    const response = await axios.put(
-      `${API_BASE_URL}/authenticate2`,
+    const response = await axiosInstance.put(
+      `/authenticate2`,
       {
         User: {
           name: username,
@@ -83,10 +94,10 @@ export const authenticateUser = async (username: string, password: string, isAdm
     console.log(error);
   }
 };
-
 export const getUsers = async () => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.get(`${API_BASE_URL}/users`, {
+    const response = await axiosInstance.get( `/users`, {
       headers: {
         "X-Authorization": authToken
       }
@@ -94,19 +105,17 @@ export const getUsers = async () => {
     if (response.status === 200) {
       console.log("Users retrieved successfully.");
       return response.data;
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else {
+    }   else {
       throw new Error(`An unknown error occurred. ${response.status}`);
     }
   } catch (error) {
     console.log(error);
   }
 };
-
 export const getGroupsAndPermissions = async () => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.get(`${API_BASE_URL}/users/groups-permissions`, {
+    const response = await axiosInstance.get( `/users/groups-permissions`, {
       headers: {
         "X-Authorization": authToken
       }
@@ -114,20 +123,19 @@ export const getGroupsAndPermissions = async () => {
     if (response.status === 200) {
       console.log("Groups retrieved successfully.");
       return response.data;
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else {
+    }   else {
       throw new Error(`An unknown error occurred. ${response.status}`);
     }
   } catch (error) {
     console.log(error);
   }
 };
-
 export const addGroup = async (groupName: string, permissions: string[]) => {
+  const authToken = localStorage.getItem("authToken");
+  console.log(authToken);
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}/groups`,
+    const response = await axiosInstance.post(
+       `/groups`,
       {
         name: groupName,
         permissions: permissions
@@ -139,7 +147,6 @@ export const addGroup = async (groupName: string, permissions: string[]) => {
         }
       }
     );
-
     console.log("Group added successfully.");
     return response.data;
   } catch (error) {
@@ -169,10 +176,10 @@ export const addGroup = async (groupName: string, permissions: string[]) => {
     }
   }
 };
-
 export const getPackages = async (queryParams: object[], offset: number = 1) => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.post(`${API_BASE_URL}/packages`, queryParams, {
+    const response = await axiosInstance.post( `/packages`, queryParams, {
       params: { offset },
       headers: {
         "X-Authorization": authToken,
@@ -184,9 +191,7 @@ export const getPackages = async (queryParams: object[], offset: number = 1) => 
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageQuery or it is formed improperly, or is invalid.");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else if (response.status === 413) {
+    }   else if (response.status === 413) {
       throw new Error("Too many packages returned.");
     } else {
       throw new Error(`An unknown error occurred. ${response.status}`);
@@ -195,11 +200,10 @@ export const getPackages = async (queryParams: object[], offset: number = 1) => 
     console.log(error);
   }
 };
-
 export const getPackageById = async (packageId: string) => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    console.log("From API", packageId);
-    const response = await axios.get(`${API_BASE_URL}/package/${packageId}`, {
+    const response = await axiosInstance.get( `/package/${packageId}`, {
       headers: {
         "X-Authorization": authToken
       }
@@ -209,9 +213,7 @@ export const getPackageById = async (packageId: string) => {
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageID or it is formed improperly, or is invalid.");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else if (response.status === 404) {
+    }   else if (response.status === 404) {
       throw new Error("Package does not exist.");
     } else {
       throw new Error(`An unknown error occurred. ${response.status}`);
@@ -220,10 +222,10 @@ export const getPackageById = async (packageId: string) => {
     console.log(error);
   }
 };
-
 export const updatePackageById = async (packageId: string, packageData: object) => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.post(`${API_BASE_URL}/package/${packageId}`, packageData, {
+    const response = await axiosInstance.post( `/package/${packageId}`, packageData, {
       headers: {
         id: packageId,
         "X-Authorization": authToken,
@@ -235,9 +237,7 @@ export const updatePackageById = async (packageId: string, packageData: object) 
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageID or it is formed improperly, or is invalid.");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else if (response.status === 404) {
+    }   else if (response.status === 404) {
       throw new Error("Package does not exist.");
     } else {
       throw new Error(`An unknown error occurred. ${response.status}`);
@@ -246,10 +246,10 @@ export const updatePackageById = async (packageId: string, packageData: object) 
     console.log(error);
   }
 };
-
-export const resetRegistry = async (authToken: string) => {
+export const resetRegistry = async () => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.delete(`${API_BASE_URL}/reset`, {
+    const response = await axiosInstance.delete( `/reset`, {
       headers: {
         "X-Authorization": authToken
       }
@@ -259,19 +259,17 @@ export const resetRegistry = async (authToken: string) => {
       return response.data;
     } else if (response.status === 401) {
       throw new Error("You do not have permission to reset the registry.");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else {
+    }   else {
       throw new Error(`An unknown error occurred. ${response.status}`);
     }
   } catch (error) {
     console.log(error);
   }
 };
-
 export const getPackageRate = async (packageId: string) => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.get(`${API_BASE_URL}/package/${packageId}/rate`, {
+    const response = await axiosInstance.get( `/package/${packageId}/rate`, {
       headers: {
         "X-Authorization": authToken
       }
@@ -293,10 +291,10 @@ export const getPackageRate = async (packageId: string) => {
     console.log(error);
   }
 };
-
 export const getPackageCost = async (packageId: string, dependency: boolean = false) => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.get(`${API_BASE_URL}/package/${packageId}/cost`, {
+    const response = await axiosInstance.get( `/package/${packageId}/cost`, {
       params: { dependency },
       headers: {
         "X-Authorization": authToken
@@ -307,9 +305,7 @@ export const getPackageCost = async (packageId: string, dependency: boolean = fa
       return cost;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageID");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else if (response.status === 404) {
+    }   else if (response.status === 404) {
       throw new Error("Package does not exist.");
     } else if (response.status === 500) {
       throw new Error("The package rating system choked on at least one of the metrics.");
@@ -320,13 +316,12 @@ export const getPackageCost = async (packageId: string, dependency: boolean = fa
     console.log(error);
   }
 };
-
 export const searchPackagesByRegEx = async (regex: string) => {
-  // console.log("Searching packages by regex..";
-  // console.log(authToken);
+  const authToken = localStorage.getItem("authToken");
+  console.log("Searching packages by regex..");
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}/package/byRegEx`,
+    const response = await axiosInstance.post(
+      `/package/byRegEx`,
       { RegEx: regex },
       {
         headers: {
@@ -336,13 +331,10 @@ export const searchPackagesByRegEx = async (regex: string) => {
       }
     );
     if (response.status === 200) {
-
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageRegEx or it is formed improperly, or is invalid");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else if (response.status === 404) {
+    }   else if (response.status === 404) {
       throw new Error("No package found under this regex.");
     } else {
       throw new Error(`An unknown error occurred. ${response.status}`);
@@ -356,10 +348,9 @@ export const searchPackagesByRegEx = async (regex: string) => {
     }
   }
 };
-
 export const getTracks = async () => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/tracks`);
+    const response = await axiosInstance.get( `/tracks`);
     if (response.status === 200) {
       console.log("Tracks retrieved successfully.");
       return response.data;
@@ -373,9 +364,10 @@ export const getTracks = async () => {
   }
 };
 export const uploadPackageByURL = async (JSProgram: string, url: string) => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.post(
-      `${API_BASE_URL}/package`,
+    const response = await axiosInstance.post(
+      `/package`,
       {
         JSProgram: JSProgram,
         URL: url
@@ -392,8 +384,6 @@ export const uploadPackageByURL = async (JSProgram: string, url: string) => {
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the PackageUpload or it is formed improperly, or is invalid.");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
     } else if (response.status === 409) {
       throw new Error("Package exists already.");
     } else if (response.status === 424) {
@@ -405,45 +395,45 @@ export const uploadPackageByURL = async (JSProgram: string, url: string) => {
     console.log(error);
   }
 };
-
-export const uploadPackageByContent = async (content: string, JSProgram: string, debloat: boolean) => {
-  try {
-    const response = await axios.post(
-      `${API_BASE_URL}/package`,
-      {
-        Content: content,
-        JSProgram: JSProgram,
-        debloat: debloat
-      },
-      {
-        headers: {
-          "X-Authorization": authToken,
-          "Content-Type": "application/json"
+  export const uploadPackageByContent = async (content: string, JSProgram: string, debloat: boolean) => {
+    const authToken = localStorage.getItem("authToken");
+    try {
+      const response = await axiosInstance.post(
+         `/package`,
+        {
+          Content: content,
+          JSProgram: JSProgram,
+          debloat: debloat
+        },
+        {
+          headers: {
+            "X-Authorization": authToken,
+            "Content-Type": "application/json"
+          }
         }
+      );
+      if (response.status === 200 || response.status === 201) {
+        console.log("Success. Check the ID in the returned metadata for the official ID.");
+        return response.data;
+      } else if (response.status === 400) {
+        throw new Error("There is missing field(s) in the PackageUpload or it is formed improperly, or is invalid.");
+      } else if (response.status === 403) {
+        throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
+      } else if (response.status === 409) {
+        throw new Error("Package exists already.");
+      } else if (response.status === 424) {
+        throw new Error("Package is not uploaded due to the disqualified rating.");
+      } else {
+        throw new Error(`An unknown error occurred. ${response.status}`);
       }
-    );
-    if (response.status === 200 || response.status === 201) {
-      console.log("Success. Check the ID in the returned metadata for the official ID.");
-      return response.data;
-    } else if (response.status === 400) {
-      throw new Error("There is missing field(s) in the PackageUpload or it is formed improperly, or is invalid.");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else if (response.status === 409) {
-      throw new Error("Package exists already.");
-    } else if (response.status === 424) {
-      throw new Error("Package is not uploaded due to the disqualified rating.");
-    } else {
-      throw new Error(`An unknown error occurred. ${response.status}`);
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
+  };
 export const deleteGroup = async (groupId: number) => {
+  const authToken = localStorage.getItem("authToken");
   try {
-    const response = await axios.delete(`${API_BASE_URL}/groups/${groupId}`, {
+    const response = await axiosInstance.delete( `/groups/${groupId}`, {
       headers: {
         "X-Authorization": authToken
       }
@@ -453,9 +443,7 @@ export const deleteGroup = async (groupId: number) => {
       return response.data;
     } else if (response.status === 400) {
       throw new Error("There is missing field(s) in the GroupID or it is formed improperly, or is invalid.");
-    } else if (response.status === 403) {
-      throw new Error("Authentication failed due to invalid or missing AuthenticationToken.");
-    } else if (response.status === 404) {
+    }   else if (response.status === 404) {
       throw new Error("Group does not exist.");
     } else {
       throw new Error(`An unknown error occurred. ${response.status}`);

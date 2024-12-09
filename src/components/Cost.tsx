@@ -25,10 +25,8 @@ export default function Cost({ariaLabel}: CostProps): JSX.Element {
     try {
       // Replace with the actual API endpoint to get the package cost
       const response = await getPackageCost(packageId);
-      //   console.log(response);
       if (response) {
         setCost(response);
-        // console.log(response);
         setResponseMessage(["Package cost retrieved successfully.", "success"]);
       } else {
         setResponseMessage(["Failed to get the package cost. Please try again.", "error"]);
