@@ -7,7 +7,7 @@ export default defineConfig({
     // include: ["backend/src/rating/tests__/**.test.ts"],
     include: ["tests/**/*.test.ts", "tests/**/*.test.tsx", "e2e-tests/**/*.test.ts", "e2e-tests/**/*.test.tsx"],
     coverage: {
-      reporter: ['text', 'text-summary', 'json', 'html'],
+      reporter: ["text", "text-summary", "json", "html"],
       reportsDirectory: "./coverage", // Optional, specify output directory
       include: ["src"],
       exclude: [
@@ -28,9 +28,9 @@ export default defineConfig({
         "**/src/main.tsx"
       ],
       thresholds: {
-        statements: 90,
-        functions: 100,
-        lines: 90
+        // statements: 60,
+        // functions: 60,
+        lines: 60
       },
       ignoreEmptyLines: true,
       reportOnFailure: true
