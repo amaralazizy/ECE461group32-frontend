@@ -22,8 +22,7 @@ export default function Upload({ariaLabel}: UploadProps): JSX.Element {
   const handleUrlSubmit = async () => {
     try {
       if (URLRegEx.test(url)) {
-        const response = await uploadPackageByURL("test js program", url);
-        console.log(response);
+        await uploadPackageByURL("test js program", url);
         setErrorMessage("");
       } else {
         setErrorMessage("Invalid URL");

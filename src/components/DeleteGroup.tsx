@@ -14,7 +14,6 @@ export default function DeleteGroup({ariaLabel}: DeleteGroupProps) {
         .then((res) => res)
         .then((res) => setGroups(res.groups));
     }, []);
-    console.log(groups);
 
     async function handleDeleteGroup(id: number) {
         await deleteGroup(id);

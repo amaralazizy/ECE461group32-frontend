@@ -26,7 +26,6 @@ const GetPackage: ({ ariaLabel }: GetPackageProps) => JSX.Element = ({ ariaLabel
     setLoading(true);
     setError(null);
     try {
-      console.log(packageId);
       const data = await getPackageById(packageId);
       if (data) {
         setResult(JSON.stringify(data));
